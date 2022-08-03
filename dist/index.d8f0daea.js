@@ -15657,6 +15657,7 @@ parcelHelpers.export(exports, "state", ()=>state
 );
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe
 );
+var _config = require("./config");
 const state = {
     recipe: {
     }
@@ -15664,7 +15665,7 @@ const state = {
 const loadRecipe = async function(id) {
     try {
         // Fetching Recipe from Api
-        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+        const res = await fetch(`${_config.API_URL}/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(`${data.message} ${res.status}`);
         console.log(data);
@@ -15684,6 +15685,13 @@ const loadRecipe = async function(id) {
         console.log(err);
     }
 };
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./config":"8NE7F"}],"8NE7F":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL
+);
+const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"bLzy9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -15718,7 +15726,7 @@ class RecipeView {
 }
 exports.default = new RecipeView(); // .split(':', 4).join('s:')
 
-},{"regenerator-runtime":"cH8Iq","url:../../img/icons.svg":"2Mh0L","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","fractional":"40qvl"}],"2Mh0L":[function(require,module,exports) {
+},{"regenerator-runtime":"cH8Iq","url:../../img/icons.svg":"2Mh0L","fractional":"40qvl","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"2Mh0L":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('3m9Pw') + "icons.afc07697.svg";
 
 },{"./helpers/bundle-url":"8YnfL"}],"8YnfL":[function(require,module,exports) {
