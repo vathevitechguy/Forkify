@@ -1,0 +1,23 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VikkyDev05/Forkify.git"
+  },
+  "author": "Victor Aromose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VikkyDev05/Forkify/issues"
+  },
+  "homepage": "https://github.com/VikkyDev05/Forkify#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0"
+  }
+}
