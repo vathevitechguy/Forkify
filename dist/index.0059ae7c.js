@@ -553,13 +553,14 @@ const controlRecipes = async function() {
         // Render Recipe
         (0, _recipeViewsJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        console.log(err);
+        (0, _recipeViewsJsDefault.default).renderSpinner();
+        (0, _recipeViewsJsDefault.default).renderError();
     }
 };
-[
-    "hashchange",
-    "load"
-].forEach((ev)=>window.addEventListener(ev, controlRecipes));
+const init = function() {
+    (0, _recipeViewsJsDefault.default).addHandlerRender(controlRecipes);
+};
+init();
 
 },{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
@@ -1683,10 +1684,19 @@ const loadRecipe = async function(id) {
         console.log(state.recipe);
     } catch (err) {
         console.log(err);
+        throw err;
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"c93Tb","./helpers.js":"fn2xV"}],"gkKU3":[function(require,module,exports) {
+},{"./config.js":"c93Tb","./helpers.js":"fn2xV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c93Tb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
+const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
+const TIMEOUT_SEC = 10;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -1716,15 +1726,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"c93Tb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "API_URL", ()=>API_URL);
-parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
-const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
-const TIMEOUT_SEC = 10;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fn2xV":[function(require,module,exports) {
+},{}],"fn2xV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getJSON", ()=>getJSON);
@@ -1751,7 +1753,7 @@ const getJSON = async function(url) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"c93Tb"}],"l1FUm":[function(require,module,exports) {
+},{"./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1FUm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _regeneratorRuntime = require("regenerator-runtime");
@@ -1761,6 +1763,14 @@ var _fractional = require("fractional");
 class RecipeView {
     #parentEl = document.querySelector(".recipe");
     #data;
+    #errorMessage = "We could not find that recipe. Please try another one!";
+    #message = "";
+    addHandlerRender(handler) {
+        [
+            "hashchange",
+            "load"
+        ].forEach((ev)=>window.addEventListener(ev, handler));
+    }
     render(data) {
         this.#data = data;
         const markup = this.#generateMarkup();
@@ -1778,6 +1788,32 @@ class RecipeView {
         </svg>
       </div>
     `;
+        this.#clear();
+        this.#parentEl.insertAdjacentHTML("afterbegin", injectHtml);
+    }
+    renderError(message = this.#errorMessage) {
+        const injectHtml = `
+      <div class="error">
+      <div>
+        <svg>
+          <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+        </svg>
+      </div>
+      <p>${message}</p>
+    </div>`;
+        this.#clear();
+        this.#parentEl.insertAdjacentHTML("afterbegin", injectHtml);
+    }
+    renderMessage(message = this.#message) {
+        const injectHtml = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>`;
         this.#clear();
         this.#parentEl.insertAdjacentHTML("afterbegin", injectHtml);
     }
