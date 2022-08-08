@@ -587,7 +587,7 @@ const controlServings = function(newServings) {
     // Update the recipe servings
     _modelJs.updateServings(newServings);
     // Update the Recipe View
-    (0, _recipeViewsJsDefault.default).render(_modelJs.state.recipe);
+    (0, _recipeViewsJsDefault.default).update(_modelJs.state.recipe);
 //
 };
 const init = function() {
@@ -2531,6 +2531,24 @@ class View {
         const markup = this._generateMarkup();
         this._clear();
         this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    update(data) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+        const newDom = document.createRange().createContextualFragment(newMarkup);
+        const newElements = Array.from(newDom.querySelectorAll("*"));
+        const curElements = Array.from(this._parentEl.querySelectorAll("*"));
+        newElements.forEach((newEl, i)=>{
+            const curEl = curElements[i];
+            // console.log(curEl, newEl.isEqualNode(curEl));
+            // Updates changed texts
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") {
+                curEl.textContent = newEl.textContent;
+                console.log(newEl.firstChild.nodeValue.trim());
+            }
+            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value));
+        });
     }
     _clear() {
         this._parentEl.innerHTML = "";
