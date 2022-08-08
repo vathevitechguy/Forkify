@@ -543,6 +543,7 @@ var _searchViewJs = require("./views/searchView.js");
 var _searchViewJsDefault = parcelHelpers.interopDefault(_searchViewJs);
 var _resultsViewJs = require("./views/resultsView.js");
 var _resultsViewJsDefault = parcelHelpers.interopDefault(_resultsViewJs);
+if (module.hot) module.hot.accept;
 // https://forkify-api.herokuapp.com/v2
 ///////////////////////////////////////
 const controlRecipes = async function() {
@@ -2420,9 +2421,9 @@ class RecipeView extends (0, _viewJsDefault.default) {
         </div>
 
         <div class="recipe__user-generated">
-            <svg>
+            <!---<svg>
             <use href="${0, _iconsSvgDefault.default}#icon-user"></use>
-            </svg>
+            </svg> ---->
         </div>
         <button class="btn--round">
             <svg class="">
@@ -2482,6 +2483,7 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class View {
     _data;
     render(data) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
         this._data = data;
         const markup = this._generateMarkup();
         this._clear();
@@ -2851,23 +2853,19 @@ var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class SearchResults extends (0, _viewJsDefault.default) {
     _parentEl = document.querySelector(".results");
+    _errorMessage = "No recipes found for your query! Please try again";
+    _message = "";
     _generateMarkup() {
-        console.log(this._data);
         return this._data.map((result)=>{
             return `
          <li class="preview">
-            <a class="preview__link preview__link--active" href="#${result.id}">
+            <a class="preview__link" href="#${result.id}">
             <figure class="preview__fig">
-                <img src="${result.image}" alt="Test" />
+                <img src="${result.image}" alt="${result.title}" />
             </figure>
             <div class="preview__data">
                 <h4 class="preview__title">${result.title}</h4>
                 <p class="preview__publisher">${result.publisher}</p>
-                <div class="preview__user-generated">
-                <svg>
-                    <use href="${0, _iconsSvgDefault.default}#icon-user"></use>
-                </svg>
-                </div>
             </div>
             </a>
         </li>

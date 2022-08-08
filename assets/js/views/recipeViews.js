@@ -58,9 +58,9 @@ class RecipeView extends View {
         </div>
 
         <div class="recipe__user-generated">
-            <svg>
+            <!---<svg>
             <use href="${icons}#icon-user"></use>
-            </svg>
+            </svg> ---->
         </div>
         <button class="btn--round">
             <svg class="">

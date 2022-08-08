@@ -6,6 +6,9 @@ import 'regenerator-runtime/runtime';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 
+if (module.hot) {
+  module.hot.accept;
+}
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
