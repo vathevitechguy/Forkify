@@ -579,14 +579,14 @@ const controlSearchResults = async function() {
         (0, _resultsViewJsDefault.default).renderError();
     }
 };
-const constrolPagination = function(GoPageNum) {
+const controlPagination = function(GoPageNum) {
     (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(GoPageNum));
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
 };
 const init = function() {
     (0, _recipeViewsJsDefault.default).addHandlerRender(controlRecipes);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
-    (0, _paginationViewJsDefault.default).addHandlerClick(constrolPagination);
+    (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
 };
 init();
 
