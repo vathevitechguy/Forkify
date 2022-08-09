@@ -31,7 +31,7 @@ export default class View {
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
         curEl.textContent = newEl.textContent;
-        console.log(newEl.firstChild.nodeValue.trim());
+        // console.log(newEl.firstChild.nodeValue.trim());
       }
 
       if (!newEl.isEqualNode(curEl)) {
