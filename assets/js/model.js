@@ -10,6 +10,7 @@ export const state = {
     page: 1,
     resultsPerPage: RESULT_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 export const loadRecipe = async function (id) {
@@ -49,6 +50,7 @@ export const loadSearchResult = async function (query) {
         image: recipe.image_url,
       };
     });
+    state.search.page = 1;
   } catch (err) {
     console.log(err);
     throw err;

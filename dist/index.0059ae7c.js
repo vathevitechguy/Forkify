@@ -1713,7 +1713,8 @@ const state = {
         results: [],
         page: 1,
         resultsPerPage: (0, _configJs.RESULT_PER_PAGE)
-    }
+    },
+    bookmarks: []
 };
 const loadRecipe = async function(id) {
     try {
@@ -1749,6 +1750,7 @@ const loadSearchResult = async function(query) {
                 image: recipe.image_url
             };
         });
+        state.search.page = 1;
     } catch (err) {
         console.log(err);
         throw err;
