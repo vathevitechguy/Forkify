@@ -83,7 +83,7 @@ export const updateServings = function (newServings) {
 };
 
 export const addBookmark = function (recipe) {
-  // Push bookmark
+  // Add bookmark
   state.bookmarks.push(recipe);
 
   // Mark current recipe as bookmark
@@ -91,14 +91,19 @@ export const addBookmark = function (recipe) {
 };
 
 export const deleteBookmark = function (id) {
-  // const index = state.bookmarks.findIndex((el) => el.id === id);
+  const index = state.bookmarks.findIndex((el) => el.id === id);
+  state.bookmarks.splice(index, 1);
+  console.log(state.bookmarks, 'Deleted');
 
-  state.bookmarks.some((bookReci, i) => {
-    if (id === bookReci.id) {
-      console.log(i);
-      state.bookmarks.slice(i, 1);
-      state.recipe.bookmarked = false;
-      console.log('Deleted');
-    }
-  });
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+  // state.bookmarks.some((bookReci, i) => {
+  //   if (id === bookReci.id) {
+  //     console.log(i);
+  //     state.bookmarks.slice(i, 1);
+  //     bookReci.bookmarked = false;
+  //     // state.recipe.bookmarked = false;
+  //     console.log('Deleted');
+  //   }
+  // });
 };

@@ -3,8 +3,8 @@
 59/workspaces/Forkify/flowcharts/forkify-flowchart-part-3.png1659495866562410801 0
 30/workspaces/Forkify/flowcharts1659497178672143502 1
 31/workspaces/Forkify/_config.yml1659496841021786954 0
-43/workspaces/Forkify/assets/js/views/view.js1659994202070919388 0
-38/workspaces/Forkify/assets/js/model.js1660083260623880587 0
+43/workspaces/Forkify/assets/js/views/view.js1660083932861623095 0
+38/workspaces/Forkify/assets/js/model.js1660088943654090549 0
 57/workspaces/Forkify/assets/.parcel-cache/ec7a7e8ddee0d9ca1659564827472822693 0
 61/workspaces/Forkify/assets/.parcel-cache/cc001662b4fa88d5.txt1659563062755358299 0
 57/workspaces/Forkify/assets/.parcel-cache/9a9c7011435fc4021659564827472822693 0
@@ -28,13 +28,13 @@
 42/workspaces/Forkify/dist/logo.f9c4dbb7.png1660083414614135172 0
 43/workspaces/Forkify/dist/icons.bc672703.svg1660083414610135117 0
 42/workspaces/Forkify/dist/index.bd5e368e.js1659501965132906287 0
-42/workspaces/Forkify/dist/index.0059ae7c.js1660083800043680430 0
+42/workspaces/Forkify/dist/index.0059ae7c.js1660088943778092351 0
 42/workspaces/Forkify/dist/index.d8f0daea.js1659563607405159209 0
-46/workspaces/Forkify/dist/index.0059ae7c.js.map1660083800043680430 0
+46/workspaces/Forkify/dist/index.0059ae7c.js.map1660088943782092410 0
 43/workspaces/Forkify/dist/index.c8334574.css1660083414434132682 0
 47/workspaces/Forkify/dist/index.c8334574.css.map1660083414438132737 0
 43/workspaces/Forkify/dist/icons.2f308397.svg1660083414610135117 0
-24/workspaces/Forkify/dist1660083800043680430 1
+24/workspaces/Forkify/dist1660088943782092410 1
 56/workspaces/Forkify/node_modules/to-regex-range/index.js1659565250331211796 0
 55/workspaces/Forkify/node_modules/to-regex-range/LICENSE1659565250339212116 0
 47/workspaces/Forkify/node_modules/to-regex-range1659565250339212116 1
@@ -1852,7 +1852,7 @@
 86/workspaces/Forkify/node_modules/@parcel/reporter-dev-server/lib/ServerReporter.js.map1659565250915235145 0
 65/workspaces/Forkify/node_modules/core-js/stable/array/index-of.js1659565251559260892 0
 74/workspaces/Forkify/node_modules/@parcel/core/src/requests/AssetRequest.js1659565250739228108 0
-43/workspaces/Forkify/assets/js/controller.js1660083799939678899 0
+43/workspaces/Forkify/assets/js/controller.js1660087882142721132 0
 78/workspaces/Forkify/node_modules/@parcel/optimizer-htmlnano/src/svgMappings.js1659565250467217234 0
 82/workspaces/Forkify/node_modules/caniuse-lite/data/features/css-scroll-behavior.js1659565251099242501 0
 78/workspaces/Forkify/node_modules/@parcel/optimizer-htmlnano/lib/svgMappings.js1659565250435215954 0
@@ -3471,7 +3471,7 @@
 64/workspaces/Forkify/node_modules/caniuse-lite/data/regions/ES.js1659565251167245220 0
 50/workspaces/Forkify/node_modules/csso/lib/index.js1659565250755228748 0
 67/workspaces/Forkify/node_modules/core-js/full/typed-array/reduce.js1659565251731267769 0
-50/workspaces/Forkify/assets/js/views/recipeViews.js1660083726862646251 0
+50/workspaces/Forkify/assets/js/views/recipeViews.js1660086795282988883 0
 65/workspaces/Forkify/node_modules/core-js/features/number/index.js1659565251575261532 0
 50/workspaces/Forkify/node_modules/@parcel/graph/lib1659565250627223630 1
 62/workspaces/Forkify/node_modules/terser/lib/compress/inline.js1659565250827231627 0
