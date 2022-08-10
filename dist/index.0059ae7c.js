@@ -596,7 +596,6 @@ const controlAddBookmark = function() {
     if (!_modelJs.state.recipe.bookmarked) _modelJs.addBookmark(_modelJs.state.recipe);
     else _modelJs.deleteBookmark(_modelJs.state.recipe.id);
     (0, _recipeViewsJsDefault.default).update(_modelJs.state.recipe);
-    console.log(_modelJs.state.bookmarks);
 };
 const init = function() {
     (0, _recipeViewsJsDefault.default).addHandlerRender(controlRecipes);
@@ -1786,19 +1785,15 @@ const addBookmark = function(recipe) {
     if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 };
 const deleteBookmark = function(id) {
-    const index = state.bookmarks.findIndex((el)=>el.id === id);
-    state.bookmarks.splice(index, 1);
-    console.log(state.bookmarks, "Deleted");
-    if (id === state.recipe.id) state.recipe.bookmarked = false;
-// state.bookmarks.some((bookReci, i) => {
-//   if (id === bookReci.id) {
-//     console.log(i);
-//     state.bookmarks.slice(i, 1);
-//     bookReci.bookmarked = false;
-//     // state.recipe.bookmarked = false;
-//     console.log('Deleted');
-//   }
-// });
+    /* const index = state.bookmarks.findIndex((el) => el.id === id);
+  state.bookmarks.splice(index, 1);
+  console.log(state.bookmarks, 'Deleted'); */ if (id === state.recipe.id) state.recipe.bookmarked = false;
+    state.bookmarks.some((bookReci, i)=>{
+        if (id === bookReci.id) {
+            state.bookmarks.splice(i, 1);
+            bookReci.bookmarked = false;
+        }
+    });
 };
 
 },{"regenerator-runtime":"dXNgZ","./config.js":"c93Tb","./helpers.js":"fn2xV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXNgZ":[function(require,module,exports) {
