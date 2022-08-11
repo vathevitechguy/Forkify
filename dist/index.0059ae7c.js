@@ -595,6 +595,9 @@ const controlServings = function(newServings) {
     (0, _recipeViewsJsDefault.default).update(_modelJs.state.recipe);
 //
 };
+const controlBookmarks = function() {
+    (0, _bookmarkViewJsDefault.default).render(_modelJs.state.bookmarks);
+};
 const controlAddBookmark = function() {
     // Add/Remove bookmark
     if (!_modelJs.state.recipe.bookmarked) _modelJs.addBookmark(_modelJs.state.recipe);
@@ -602,9 +605,10 @@ const controlAddBookmark = function() {
     // Update Parent Element
     (0, _recipeViewsJsDefault.default).update(_modelJs.state.recipe);
     // Render Bookmarks
-    (0, _bookmarkViewJsDefault.default).render(_modelJs.state.bookmarks);
+    controlBookmarks();
 };
 const init = function() {
+    (0, _bookmarkViewJsDefault.default).addHandlerRender(controlBookmarks);
     (0, _recipeViewsJsDefault.default).addHandlerRender(controlRecipes);
     (0, _recipeViewsJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _recipeViewsJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
@@ -1785,11 +1789,16 @@ const updateServings = function(newServings) {
     });
     state.recipe.servings = newServings;
 };
+const saveBookmarksLocally = function() {
+    localStorage.setItem("Bookmarks", JSON.stringify(state.bookmarks));
+};
 const addBookmark = function(recipe) {
     // Add bookmark
     state.bookmarks.push(recipe);
     // Mark current recipe as bookmark
     if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+    // Save bookmarks to local Storage
+    saveBookmarksLocally();
 };
 const deleteBookmark = function(id) {
     /* const index = state.bookmarks.findIndex((el) => el.id === id);
@@ -1801,7 +1810,18 @@ const deleteBookmark = function(id) {
             bookReci.bookmarked = false;
         }
     });
+    // Save bookmarks to local Storage
+    saveBookmarksLocally();
 };
+const getBookmarks = function() {
+    const bookmarksData = JSON.parse(localStorage.getItem("Bookmarks"));
+    if (!bookmarksData) return;
+    state.bookmarks = bookmarksData;
+}();
+const clearBookmarks = function() {
+    localStorage.clear("Bookmarks");
+};
+clearBookmarks();
 
 },{"regenerator-runtime":"dXNgZ","./config.js":"c93Tb","./helpers.js":"fn2xV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXNgZ":[function(require,module,exports) {
 /**
@@ -3068,6 +3088,9 @@ class BookmarksView extends (0, _viewJsDefault.default) {
     _parentEl = document.querySelector(".bookmarks__list");
     _errorMessage = "No bookmarks yet. Find a nice recipe and bookmark it :)";
     _message = "";
+    addHandlerRender(handler) {
+        window.addEventListener("load", handler);
+    }
     _generateMarkup() {
         const id = window.location.hash.slice(1);
         return this._data.map((bookmark)=>{
