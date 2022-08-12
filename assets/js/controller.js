@@ -8,6 +8,7 @@ import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarkView from './views/bookmarkView.js';
 import addRecipeView from './views/addRecipeView.js';
+import { MODAL_CLOSE_TIME } from './config.js';
 
 if (module.hot) {
   module.hot.accept;
@@ -86,6 +87,30 @@ const controlAddBookmark = function () {
   controlBookmarks();
 };
 
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // Render Spinner
+    addRecipeView.renderSpinner();
+
+    await model.uploadRecipe(newRecipe);
+
+    // Render new recipe
+    recipeView.render(model.state.recipe);
+
+    // Succes message
+    addRecipeView.renderMessage();
+
+    // Close Modal
+    setTimeout(() => addRecipeView._toggleWindow(), MODAL_CLOSE_TIME * 1000);
+
+    // Render to bookmark View
+    controlBookmarks();
+  } catch (err) {
+    console.error('fire', err);
+    addRecipeView.renderError(err.message);
+  }
+};
+
 const init = function () {
   bookmarkView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -93,5 +118,6 @@ const init = function () {
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init();
