@@ -637,7 +637,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -2611,9 +2611,9 @@ class RecipeView extends (0, _viewJsDefault.default) {
         </div>
 
         <div class="recipe__user-generated">
-            <!---<svg>
+            ${this._data.key ? `<svg>
             <use href="${0, _iconsSvgDefault.default}#icon-user"></use>
-            </svg> ---->
+            </svg>` : ""}
         </div>
         <button class="btn--round btn--bookmark">
             <svg class="">
@@ -3076,7 +3076,7 @@ class SearchResults extends (0, _viewJsDefault.default) {
 }
 exports.default = new SearchResults();
 
-},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"anUGa","./preView.js":"cklqT"}],"cklqT":[function(require,module,exports) {
+},{"./view.js":"4RJvw","url:../../img/icons.svg":"anUGa","./preView.js":"cklqT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cklqT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");
