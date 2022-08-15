@@ -20,7 +20,6 @@ class PaginationView extends View {
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
-    console.log(numPages);
     // Page 1 and other pages
     if (curPage === 1 && numPages > 1) {
       return `
@@ -32,6 +31,8 @@ class PaginationView extends View {
                 <use href="${icons}#icon-arrow-right"></use>
             </svg>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
       `;
     }
 
@@ -46,6 +47,8 @@ class PaginationView extends View {
             </svg>
             <span>Page ${curPage - 1}</span>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
         `;
     }
 
@@ -68,6 +71,8 @@ class PaginationView extends View {
                 <use href="${icons}#icon-arrow-right"></use>
             </svg>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
       `;
     }
 

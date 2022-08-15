@@ -3123,7 +3123,6 @@ class PaginationView extends (0, _viewJsDefault.default) {
     _generateMarkup() {
         const curPage = this._data.page;
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-        console.log(numPages);
         // Page 1 and other pages
         if (curPage === 1 && numPages > 1) return `
         <button data-goto="${curPage + 1}" class="btn--inline pagination__btn--next">
@@ -3132,6 +3131,8 @@ class PaginationView extends (0, _viewJsDefault.default) {
                 <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
             </svg>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
       `;
         // Last page
         if (curPage === numPages && numPages > 1) return `
@@ -3141,6 +3142,8 @@ class PaginationView extends (0, _viewJsDefault.default) {
             </svg>
             <span>Page ${curPage - 1}</span>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
         `;
         // Other page
         if (curPage < numPages) return `
@@ -3156,6 +3159,8 @@ class PaginationView extends (0, _viewJsDefault.default) {
                 <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
             </svg>
         </button>
+
+         <p style="font-size: 14px; text-align: center; padding-top: 5px; color: #918581;">${curPage} of ${numPages} Pages</p>
       `;
         // Page 1 and No pages
         return "";
