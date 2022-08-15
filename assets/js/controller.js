@@ -47,6 +47,7 @@ const controlSearchResults = async function () {
 
     // Render Search Results
     console.log(model.getSearchResultsPage());
+    console.log(model.getSortedResult());
     resultsView.render(model.getSearchResultsPage());
 
     //Render Pagination Buttons
@@ -56,6 +57,8 @@ const controlSearchResults = async function () {
     resultsView.renderError();
   }
 };
+
+const controlSorting = function () {};
 
 const controlPagination = function (GoPageNum) {
   resultsView.render(model.getSearchResultsPage(GoPageNum));

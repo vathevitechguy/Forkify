@@ -577,6 +577,7 @@ const controlSearchResults = async function() {
         // console.log(model.state.search.results);
         // Render Search Results
         console.log(_modelJs.getSearchResultsPage());
+        console.log(_modelJs.getSortedResult());
         (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
         //Render Pagination Buttons
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
@@ -585,6 +586,7 @@ const controlSearchResults = async function() {
         (0, _resultsViewJsDefault.default).renderError();
     }
 };
+const controlSorting = function() {};
 const controlPagination = function(GoPageNum) {
     (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(GoPageNum));
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
@@ -1739,6 +1741,7 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResult", ()=>loadSearchResult);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
+parcelHelpers.export(exports, "getSortedResult", ()=>getSortedResult);
 parcelHelpers.export(exports, "updateServings", ()=>updateServings);
 parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
 parcelHelpers.export(exports, "deleteBookmark", ()=>deleteBookmark);
@@ -1810,6 +1813,11 @@ const getSearchResultsPage = function(page = state.search.page) {
     const end = page * state.search.resultsPerPage;
     return state.search.results.slice(start, end);
 };
+const getSortedResult = function() {
+    const test = getSearchResultsPage().sort((a, b)=>a - b);
+    console.log(test);
+};
+getSortedResult();
 const updateServings = function(newServings) {
     state.recipe.ingredients.forEach((ing)=>{
         ing.quantity = ing.quantity * newServings / state.recipe.servings;
@@ -3070,7 +3078,24 @@ class SearchResults extends (0, _viewJsDefault.default) {
     _message = "";
     _generateMarkup() {
         const id = window.location.hash.slice(1);
-        return this._data.map((result)=>(0, _preViewJsDefault.default).render(result, false)).join("");
+        const sortMarkup = `
+      <button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT</button>
+      <style>.btn--sort {
+        margin-left: auto;
+        border: none;
+        background: none;
+        font-size: 1.4rem;
+        font-weight: 500;
+        cursor: pointer;
+        float: right;
+        margin-right: 20px;
+        margin-bottom: 25px !important;
+      }</style>
+    `;
+        const data = `
+      ${sortMarkup} ${this._data.map((result)=>(0, _preViewJsDefault.default).render(result, false)).join("")}
+      `;
+        return data;
     }
 }
 exports.default = new SearchResults();
