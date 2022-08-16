@@ -573,15 +573,15 @@ const controlRecipes = async function() {
 };
 const controlSearchResults = async function() {
     try {
-        (0, _resultsViewJsDefault.default).renderSpinner();
         const query = (0, _searchViewJsDefault.default).getQuery();
         if (!query) return;
+        (0, _resultsViewJsDefault.default).renderSpinner();
         await _modelJs.loadSearchResult(query);
         // console.log(model.state.search.results);
         // Render Search Results
         console.log(_modelJs.getSearchResultsPage());
         (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
-        (0, _sortResultViewJsDefault.default).render(_modelJs.state.search.sortStatus);
+        (0, _sortResultViewJsDefault.default).render(_modelJs.state.search);
         //Render Pagination Buttons
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
@@ -590,7 +590,7 @@ const controlSearchResults = async function() {
     }
 };
 const controlSorting = function() {
-    // sortResultView.update(model.state.search.sortStatus);
+    // sortResultView.update(model.state.search);
     (0, _resultsViewJsDefault.default).update(_modelJs.getSortedResult());
 };
 const controlPagination = function(GoPageNum) {
@@ -1822,13 +1822,6 @@ const getSearchResultsPage = function(page = state.search.page) {
     return state.search.results.slice(start, end);
 };
 const getSortedResult = function() {
-    // const condition = function (a, b, condi1, condi2) {
-    //   const titleA = a.toUpperCase();
-    //   const titleB = b.toUpperCase();
-    //   if (titleA < titleB) return +condi1;
-    //   if (titleA > titleB) return +condi2;
-    //   return 0;
-    // };
     if (state.search.sortStatus) {
         const sorter = getSearchResultsPage().sort((a, b)=>{
             const titleA = a.title.toUpperCase();
@@ -1892,15 +1885,23 @@ const clearBookmarks = function() {
 clearBookmarks();
 const uploadRecipe = async function(newRecipe) {
     try {
-        const ingredients = Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing)=>{
-            const ingArr = ing[1].replaceAll(" ", "").split(",");
-            if (ingArr.length !== 3) throw new Error("Wrong ingredient format! Please use the correct format :)");
-            const [quantity, unit, description] = ingArr;
-            return {
-                quantity: quantity ? +quantity : null,
-                unit,
-                description
-            };
+        console.log(Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
+            let ingGrping = [];
+            if (ing[0].startsWith(`ingredient-1`)) ingGrping.push([
+                ing
+            ]);
+            const [quantity, unit, description] = ingGrping;
+            return quantity, unit, description;
+        }));
+        const ingredients = Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
+            ing[0].startsWith(`ingredient-${i + 1}`);
+        // const ingArr = ing[1].replaceAll(' ', '').split(',');
+        // if (ingArr.length !== 3)
+        //   throw new Error(
+        //     'Wrong ingredient format! Please use the correct format :)'
+        //   );
+        // const [quantity, unit, description] = ingArr;
+        // return { quantity: quantity ? +quantity : null, unit, description };
         });
         const recipe = {
             title: newRecipe.title,
@@ -3272,6 +3273,7 @@ class AddRecipeView extends (0, _viewJsDefault.default) {
                 ...new FormData(this)
             ];
             const data = Object.fromEntries(dataArr); // Converting Array to object
+            // console.log(data);
             handler(data);
         });
     }
@@ -3294,20 +3296,24 @@ class sortResultView extends (0, _viewJsDefault.default) {
         });
     }
     _generateMarkup() {
-        const data = this._data;
-        const sortMarkup = `
-      <center><button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT ${data ? `A-Z` : `Z-A`}</button></center>
-      <style>.btn--sort {
-        margin-left: auto;
-        border: none;
-        background: none;
-        font-size: 1.4rem;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 15px !important;
-      }</style>
-    `;
-        return sortMarkup;
+        const status = this._data.sortStatus;
+        const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
+        if (numPages > 1) {
+            const sortMarkup = `
+        <center><button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT ${status ? `A-Z` : `Z-A`}</button></center>
+        <style>.btn--sort {
+          margin-left: auto;
+          border: none;
+          background: none;
+          font-size: 1.4rem;
+          font-weight: 500;
+          cursor: pointer;
+          margin-bottom: 15px !important;
+        }</style>
+      `;
+            return sortMarkup;
+        }
+        return "";
     }
 }
 exports.default = new sortResultView();

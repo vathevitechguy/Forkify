@@ -761,6 +761,7 @@ body {
 
 .upload__column input::placeholder {
   color: #d3c7c3;
+  font-size: 13.3px;
 }
 
 .upload__column input:focus {
@@ -786,6 +787,20 @@ body {
 .upload__btn {
   grid-column: 1 / -1;
   justify-self: center;
+}
+
+.ingredient--inputs {
+  gap: 7px;
+  flex-direction: row !important;
+  display: flex !important;
+}
+
+.ing {
+  width: 70px !important;
+}
+
+.ingDes {
+  width: 100% !important;
 }
 
 /*# sourceMappingURL=index.c8334574.css.map */

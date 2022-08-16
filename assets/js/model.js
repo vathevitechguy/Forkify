@@ -81,15 +81,6 @@ export const getSearchResultsPage = function (page = state.search.page) {
 };
 
 export const getSortedResult = function () {
-  // const condition = function (a, b, condi1, condi2) {
-  //   const titleA = a.toUpperCase();
-  //   const titleB = b.toUpperCase();
-  //   if (titleA < titleB) return +condi1;
-  //   if (titleA > titleB) return +condi2;
-
-  //   return 0;
-  // };
-
   if (state.search.sortStatus) {
     const sorter = getSearchResultsPage().sort((a, b) => {
       const titleA = a.title.toUpperCase();
@@ -173,17 +164,33 @@ clearBookmarks();
 
 export const uploadRecipe = async function (newRecipe) {
   try {
+    console.log(
+      Object.entries(newRecipe)
+        .filter((entry) => entry[0].startsWith('ingredient') && entry[1] !== '')
+        .map((ing, i) => {
+          let ingGrping = [];
+          if (ing[0].startsWith(`ingredient-1`)) {
+            ingGrping.push([ing]);
+          }
+          const [quantity, unit, description] = ingGrping;
+          return quantity, unit, description;
+        })
+    );
     const ingredients = Object.entries(newRecipe)
       .filter((entry) => entry[0].startsWith('ingredient') && entry[1] !== '')
-      .map((ing) => {
-        const ingArr = ing[1].replaceAll(' ', '').split(',');
-        if (ingArr.length !== 3)
-          throw new Error(
-            'Wrong ingredient format! Please use the correct format :)'
-          );
+      .map((ing, i) => {
+        if (ing[0].startsWith(`ingredient-${i + 1}`)) {
+          // const [quantity, unit, description] = ing;
+          // console.log(ing);
+        }
+        // const ingArr = ing[1].replaceAll(' ', '').split(',');
+        // if (ingArr.length !== 3)
+        //   throw new Error(
+        //     'Wrong ingredient format! Please use the correct format :)'
+        //   );
 
-        const [quantity, unit, description] = ingArr;
-        return { quantity: quantity ? +quantity : null, unit, description };
+        // const [quantity, unit, description] = ingArr;
+        // return { quantity: quantity ? +quantity : null, unit, description };
       });
 
     const recipe = {

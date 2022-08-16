@@ -14,22 +14,29 @@ class sortResultView extends View {
   }
 
   _generateMarkup() {
-    const data = this._data;
-    const sortMarkup = `
-      <center><button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT ${
-        data ? `A-Z` : `Z-A`
-      }</button></center>
-      <style>.btn--sort {
-        margin-left: auto;
-        border: none;
-        background: none;
-        font-size: 1.4rem;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 15px !important;
-      }</style>
-    `;
-    return sortMarkup;
+    const status = this._data.sortStatus;
+    const numPages = Math.ceil(
+      this._data.results.length / this._data.resultsPerPage
+    );
+
+    if (numPages > 1) {
+      const sortMarkup = `
+        <center><button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT ${
+          status ? `A-Z` : `Z-A`
+        }</button></center>
+        <style>.btn--sort {
+          margin-left: auto;
+          border: none;
+          background: none;
+          font-size: 1.4rem;
+          font-weight: 500;
+          cursor: pointer;
+          margin-bottom: 15px !important;
+        }</style>
+      `;
+      return sortMarkup;
+    }
+    return '';
   }
 }
 

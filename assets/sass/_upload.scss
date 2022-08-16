@@ -68,6 +68,7 @@
 
       &::placeholder {
         color: $color-grey-light-3;
+        font-size: 13.3px;
       }
 
       &:focus {
@@ -96,4 +97,15 @@
     grid-column: 1 / -1;
     justify-self: center;
   }
+}
+.ingredient--inputs {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 7px;
+}
+.ing {
+  width: 70px !important;
+}
+.ingDes {
+  width: 100% !important;
 }
