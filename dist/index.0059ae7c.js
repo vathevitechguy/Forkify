@@ -549,6 +549,8 @@ var _bookmarkViewJsDefault = parcelHelpers.interopDefault(_bookmarkViewJs);
 var _addRecipeViewJs = require("./views/addRecipeView.js");
 var _addRecipeViewJsDefault = parcelHelpers.interopDefault(_addRecipeViewJs);
 var _configJs = require("./config.js");
+var _sortResultViewJs = require("./views/sortResultView.js");
+var _sortResultViewJsDefault = parcelHelpers.interopDefault(_sortResultViewJs);
 if (module.hot) module.hot.accept;
 const controlRecipes = async function() {
     try {
@@ -566,6 +568,7 @@ const controlRecipes = async function() {
     } catch (err) {
         (0, _recipeViewsJsDefault.default).renderSpinner();
         (0, _recipeViewsJsDefault.default).renderError();
+        console.log(err);
     }
 };
 const controlSearchResults = async function() {
@@ -577,8 +580,8 @@ const controlSearchResults = async function() {
         // console.log(model.state.search.results);
         // Render Search Results
         console.log(_modelJs.getSearchResultsPage());
-        console.log(_modelJs.getSortedResult());
         (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
+        (0, _sortResultViewJsDefault.default).render(_modelJs.state.search.sortStatus);
         //Render Pagination Buttons
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
@@ -586,7 +589,10 @@ const controlSearchResults = async function() {
         (0, _resultsViewJsDefault.default).renderError();
     }
 };
-const controlSorting = function() {};
+const controlSorting = function() {
+    // sortResultView.update(model.state.search.sortStatus);
+    (0, _resultsViewJsDefault.default).update(_modelJs.getSortedResult());
+};
 const controlPagination = function(GoPageNum) {
     (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(GoPageNum));
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
@@ -634,12 +640,13 @@ const init = function() {
     (0, _recipeViewsJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _recipeViewsJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
+    (0, _sortResultViewJsDefault.default).addHandlerSort(controlSorting);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
     (0, _addRecipeViewJsDefault.default).addHandlerUpload(controlAddRecipe);
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/sortResultView.js":"c1Psm"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1755,6 +1762,7 @@ const state = {
         query: "",
         results: [],
         page: 1,
+        sortStatus: Boolean,
         resultsPerPage: (0, _configJs.RESULT_PER_PAGE)
     },
     bookmarks: []
@@ -1814,10 +1822,35 @@ const getSearchResultsPage = function(page = state.search.page) {
     return state.search.results.slice(start, end);
 };
 const getSortedResult = function() {
-    const test = getSearchResultsPage().sort((a, b)=>a - b);
-    console.log(test);
+    // const condition = function (a, b, condi1, condi2) {
+    //   const titleA = a.toUpperCase();
+    //   const titleB = b.toUpperCase();
+    //   if (titleA < titleB) return +condi1;
+    //   if (titleA > titleB) return +condi2;
+    //   return 0;
+    // };
+    if (state.search.sortStatus) {
+        const sorter = getSearchResultsPage().sort((a, b)=>{
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase();
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+            return 0;
+        });
+        state.search.sortStatus = false;
+        return sorter;
+    } else {
+        const sorter1 = getSearchResultsPage().sort((a, b)=>{
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase();
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+            return 0;
+        });
+        state.search.sortStatus = true;
+        return sorter1;
+    }
 };
-getSortedResult();
 const updateServings = function(newServings) {
     state.recipe.ingredients.forEach((ing)=>{
         ing.quantity = ing.quantity * newServings / state.recipe.servings;
@@ -2703,6 +2736,7 @@ class View {
         const curElements = Array.from(this._parentEl.querySelectorAll("*"));
         newElements.forEach((newEl, i)=>{
             const curEl = curElements[i];
+            // console.log(curEl, !newEl.isEqualNode(curEl), newEl);
             // Updates changed texts
             if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") curEl.textContent = newEl.textContent;
             if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value));
@@ -3078,23 +3112,7 @@ class SearchResults extends (0, _viewJsDefault.default) {
     _message = "";
     _generateMarkup() {
         const id = window.location.hash.slice(1);
-        const sortMarkup = `
-      <button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT</button>
-      <style>.btn--sort {
-        margin-left: auto;
-        border: none;
-        background: none;
-        font-size: 1.4rem;
-        font-weight: 500;
-        cursor: pointer;
-        float: right;
-        margin-right: 20px;
-        margin-bottom: 25px !important;
-      }</style>
-    `;
-        const data = `
-      ${sortMarkup} ${this._data.map((result)=>(0, _preViewJsDefault.default).render(result, false)).join("")}
-      `;
+        const data = this._data.map((result)=>(0, _preViewJsDefault.default).render(result, false)).join("");
         return data;
     }
 }
@@ -3260,6 +3278,39 @@ class AddRecipeView extends (0, _viewJsDefault.default) {
     _generateMarkup() {}
 }
 exports.default = new AddRecipeView();
+
+},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c1Psm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./view.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class sortResultView extends (0, _viewJsDefault.default) {
+    _parentEl = document.querySelector(".sort");
+    addHandlerSort(handler) {
+        this._parentEl.addEventListener("click", function(e) {
+            const sortbtn = e.target.classList.contains("btn--sort");
+            if (!sortbtn) return;
+            handler();
+        });
+    }
+    _generateMarkup() {
+        const data = this._data;
+        const sortMarkup = `
+      <center><button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT ${data ? `A-Z` : `Z-A`}</button></center>
+      <style>.btn--sort {
+        margin-left: auto;
+        border: none;
+        background: none;
+        font-size: 1.4rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 15px !important;
+      }</style>
+    `;
+        return sortMarkup;
+    }
+}
+exports.default = new sortResultView();
 
 },{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["3pmDY","2dUup"], "2dUup", "parcelRequire3a11")
 

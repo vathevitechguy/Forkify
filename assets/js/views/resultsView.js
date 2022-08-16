@@ -9,25 +9,9 @@ class SearchResults extends View {
 
   _generateMarkup() {
     const id = window.location.hash.slice(1);
-    const sortMarkup = `
-      <button class="btn--sort"><span style="color: #f48982; font-size: 18px;">↓</span> SORT</button>
-      <style>.btn--sort {
-        margin-left: auto;
-        border: none;
-        background: none;
-        font-size: 1.4rem;
-        font-weight: 500;
-        cursor: pointer;
-        float: right;
-        margin-right: 20px;
-        margin-bottom: 25px !important;
-      }</style>
-    `;
-    const data = `
-      ${sortMarkup} ${this._data
+    const data = this._data
       .map((result) => preView.render(result, false))
-      .join('')}
-      `;
+      .join('');
 
     return data;
   }

@@ -9,6 +9,7 @@ import paginationView from './views/paginationView.js';
 import bookmarkView from './views/bookmarkView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { MODAL_CLOSE_TIME } from './config.js';
+import sortResultView from './views/sortResultView.js';
 
 if (module.hot) {
   module.hot.accept;
@@ -33,6 +34,7 @@ const controlRecipes = async function () {
   } catch (err) {
     recipeView.renderSpinner();
     recipeView.renderError();
+    console.log(err);
   }
 };
 
@@ -47,8 +49,9 @@ const controlSearchResults = async function () {
 
     // Render Search Results
     console.log(model.getSearchResultsPage());
-    console.log(model.getSortedResult());
+
     resultsView.render(model.getSearchResultsPage());
+    sortResultView.render(model.state.search.sortStatus);
 
     //Render Pagination Buttons
     paginationView.render(model.state.search);
@@ -58,7 +61,10 @@ const controlSearchResults = async function () {
   }
 };
 
-const controlSorting = function () {};
+const controlSorting = function () {
+  // sortResultView.update(model.state.search.sortStatus);
+  resultsView.update(model.getSortedResult());
+};
 
 const controlPagination = function (GoPageNum) {
   resultsView.render(model.getSearchResultsPage(GoPageNum));
@@ -120,6 +126,7 @@ const init = function () {
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
+  sortResultView.addHandlerSort(controlSorting);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
 };

@@ -8,6 +8,7 @@ export const state = {
     query: '',
     results: [],
     page: 1,
+    sortStatus: Boolean,
     resultsPerPage: RESULT_PER_PAGE,
   },
   bookmarks: [],
@@ -80,10 +81,41 @@ export const getSearchResultsPage = function (page = state.search.page) {
 };
 
 export const getSortedResult = function () {
-  const test = getSearchResultsPage().sort((a, b) => a - b);
-  console.log(test);
+  // const condition = function (a, b, condi1, condi2) {
+  //   const titleA = a.toUpperCase();
+  //   const titleB = b.toUpperCase();
+  //   if (titleA < titleB) return +condi1;
+  //   if (titleA > titleB) return +condi2;
+
+  //   return 0;
+  // };
+
+  if (state.search.sortStatus) {
+    const sorter = getSearchResultsPage().sort((a, b) => {
+      const titleA = a.title.toUpperCase();
+      const titleB = b.title.toUpperCase();
+      if (titleA < titleB) return -1;
+      if (titleA > titleB) return 1;
+
+      return 0;
+    });
+
+    state.search.sortStatus = false;
+    return sorter;
+  } else {
+    const sorter = getSearchResultsPage().sort((a, b) => {
+      const titleA = a.title.toUpperCase();
+      const titleB = b.title.toUpperCase();
+      if (titleA < titleB) return 1;
+      if (titleA > titleB) return -1;
+
+      return 0;
+    });
+
+    state.search.sortStatus = true;
+    return sorter;
+  }
 };
-getSortedResult();
 
 export const updateServings = function (newServings) {
   state.recipe.ingredients.forEach((ing) => {
