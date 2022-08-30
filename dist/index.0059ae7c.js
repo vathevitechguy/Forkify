@@ -1884,29 +1884,36 @@ const clearBookmarks = function() {
 };
 const uploadRecipe = async function(newRecipe) {
     try {
-        const ingredientsGrp = Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
-            const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
-            return ingGrp;
+        const testing = Object.entries(newRecipe).filter((entry, i)=>{
+            if (entry[0].startsWith(`ingredient-1`) && entry[1] !== "") {
+                console.log("Ingreient 1 Present " + i);
+                const ing1 = entry[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
+                return ing1;
+            }
+            if (entry[0].startsWith(`ingredient-2`) && entry[1] !== "") console.log("Ingreient 2 Present " + i);
         });
-        const [quantity, unit, description] = ingredientsGrp;
-        const ingredients = {
-            quantity: quantity ? +quantity : null,
-            unit,
-            description
-        };
-        // if (ing[0].startsWith(`ingredient-${i + 1}`)) {
-        // const [quantity, unit, description] = ing;
-        // console.log(ing);
-        // }
-        // const ingArr = ing[1].replaceAll(' ', '').split(',');
-        // if (ingArr.length !== 3)
-        //   throw new Error(
-        //     'Wrong ingredient format! Please use the correct format :)'
-        //   );
-        // const [quantity, unit, description] = ingArr;
-        // return { quantity: quantity ? +quantity : null, unit, description };
-        // });
-        const recipe = {
+        console.log(testing);
+        /*const ingredientsGrp = Object.entries(newRecipe)
+      .filter(
+        (entry, i) => entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
+      )
+      .map((ing, i) => {
+        const ingGrp = ing[1]
+          .split(',')
+          .map((el) => el.trim())
+          .reduce((prev, cur) => prev.concat(cur));
+
+        return ingGrp;
+      });
+
+    console.log(ingredientsGrp);
+
+    const [quantity, unit, description] = ingredientsGrp;
+    const ingredients = {
+      quantity: quantity ? +quantity : null,
+      unit,
+      description,
+    };*/ const recipe = {
             title: newRecipe.title,
             source_url: newRecipe.sourceUrl,
             image_url: newRecipe.image,
