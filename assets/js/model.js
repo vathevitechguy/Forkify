@@ -2,6 +2,7 @@ import { async } from 'regenerator-runtime';
 import { API_URL, KEY, RESULT_PER_PAGE } from './config.js';
 import { getJSON, sendJSON } from './helpers.js';
 
+// #630e21405a1b010016058ea4
 export const state = {
   recipe: {},
   search: {
@@ -160,38 +161,39 @@ const getBookmarks = (function () {
 const clearBookmarks = function () {
   localStorage.clear('Bookmarks');
 };
-clearBookmarks();
 
 export const uploadRecipe = async function (newRecipe) {
   try {
-    console.log(
-      Object.entries(newRecipe)
-        .filter((entry) => entry[0].startsWith('ingredient') && entry[1] !== '')
-        .map((ing, i) => {
-          let ingGrping = [];
-          if (ing[0].startsWith(`ingredient-1`)) {
-            ingGrping.push([ing]);
-          }
-          const [quantity, unit, description] = ingGrping;
-          return quantity, unit, description;
-        })
-    );
-    const ingredients = Object.entries(newRecipe)
+    const ingredientsGrp = Object.entries(newRecipe)
       .filter((entry) => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map((ing, i) => {
-        if (ing[0].startsWith(`ingredient-${i + 1}`)) {
-          // const [quantity, unit, description] = ing;
-          // console.log(ing);
-        }
-        // const ingArr = ing[1].replaceAll(' ', '').split(',');
-        // if (ingArr.length !== 3)
-        //   throw new Error(
-        //     'Wrong ingredient format! Please use the correct format :)'
-        //   );
+        const ingGrp = ing[1]
+          .split(',')
+          .map((el) => el.trim())
+          .reduce((prev, cur) => prev.concat(cur));
 
-        // const [quantity, unit, description] = ingArr;
-        // return { quantity: quantity ? +quantity : null, unit, description };
+        return ingGrp;
       });
+
+    const [quantity, unit, description] = ingredientsGrp;
+    const ingredients = {
+      quantity: quantity ? +quantity : null,
+      unit,
+      description,
+    };
+    // if (ing[0].startsWith(`ingredient-${i + 1}`)) {
+    // const [quantity, unit, description] = ing;
+    // console.log(ing);
+    // }
+    // const ingArr = ing[1].replaceAll(' ', '').split(',');
+    // if (ingArr.length !== 3)
+    //   throw new Error(
+    //     'Wrong ingredient format! Please use the correct format :)'
+    //   );
+
+    // const [quantity, unit, description] = ingArr;
+    // return { quantity: quantity ? +quantity : null, unit, description };
+    // });
 
     const recipe = {
       title: newRecipe.title,

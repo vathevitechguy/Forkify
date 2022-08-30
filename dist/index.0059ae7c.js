@@ -646,7 +646,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/sortResultView.js":"c1Psm"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","./views/sortResultView.js":"c1Psm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1882,19 +1882,22 @@ const getBookmarks = function() {
 const clearBookmarks = function() {
     localStorage.clear("Bookmarks");
 };
-clearBookmarks();
 const uploadRecipe = async function(newRecipe) {
     try {
-        console.log(Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
-            let ingGrping = [];
-            if (ing[0].startsWith(`ingredient-1`)) ingGrping.push([
-                ing
-            ]);
-            const [quantity, unit, description] = ingGrping;
-            return quantity, unit, description;
-        }));
-        const ingredients = Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
-            ing[0].startsWith(`ingredient-${i + 1}`);
+        const ingredientsGrp = Object.entries(newRecipe).filter((entry)=>entry[0].startsWith("ingredient") && entry[1] !== "").map((ing, i)=>{
+            const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
+            return ingGrp;
+        });
+        const [quantity, unit, description] = ingredientsGrp;
+        const ingredients = {
+            quantity: quantity ? +quantity : null,
+            unit,
+            description
+        };
+        // if (ing[0].startsWith(`ingredient-${i + 1}`)) {
+        // const [quantity, unit, description] = ing;
+        // console.log(ing);
+        // }
         // const ingArr = ing[1].replaceAll(' ', '').split(',');
         // if (ingArr.length !== 3)
         //   throw new Error(
@@ -1902,7 +1905,7 @@ const uploadRecipe = async function(newRecipe) {
         //   );
         // const [quantity, unit, description] = ingArr;
         // return { quantity: quantity ? +quantity : null, unit, description };
-        });
+        // });
         const recipe = {
             title: newRecipe.title,
             source_url: newRecipe.sourceUrl,
