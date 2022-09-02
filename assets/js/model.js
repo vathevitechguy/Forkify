@@ -165,17 +165,38 @@ const clearBookmarks = function () {
 export const uploadRecipe = async function (newRecipe) {
   try {
     const testing = Object.entries(newRecipe).filter((entry, i) => {
-      if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
-        console.log('Ingreient 1 Present ' + i);
-        const ing1 = entry[1]
-          .split(',')
-          .map((el) => el.trim())
-          .reduce((prev, cur) => prev.concat(cur));
-        return ing1;
-      }
-      if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
-        console.log('Ingreient 2 Present ' + i);
-      }
+      const filterData = function (entry) {
+        const ingred = entry;
+        const ingtest = ingred[1].split(',').map((el) => {
+          return el.trim();
+        });
+        // .reduce((prev, cur) => {
+        //   console.log(prev);
+        //   return prev.concat(cur);
+        // });
+
+        console.log(ingtest);
+        return ingtest;
+      };
+
+      const data =
+        entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
+          ? filterData(entry)
+          : '';
+
+      return data;
+
+      // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
+
+      // }
+      // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
+      //   console.log('Ingreient 2 Present ' + i);
+      //   const ing2 = entry[1]
+      //     .split(',')
+      //     .map((el) => el.trim())
+      //     .reduce((prev, cur) => prev.concat(cur));
+      //   return ing2;
+      // }
     });
 
     console.log(testing);
