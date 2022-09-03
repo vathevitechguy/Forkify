@@ -195,6 +195,7 @@
     "nullthrows" "^1.1.1"
     "semver" "^5.7.1"
 
+<<<<<<< HEAD
 "@parcel/css-win32-x64-msvc@1.13.0":
   "integrity" "sha512-0WFdh4nS5lkjLnBr0N6O7OatbjUFZdVBSlPDdTdwEYZkl8La+SnmGGMEkrE/jiQ6NjjwgLorN7xainmPWuQdDw=="
   "resolved" "https://registry.npmjs.org/@parcel/css-win32-x64-msvc/-/css-win32-x64-msvc-1.13.0.tgz"
@@ -215,6 +216,28 @@
     "@parcel/css-linux-x64-gnu" "1.13.0"
     "@parcel/css-linux-x64-musl" "1.13.0"
     "@parcel/css-win32-x64-msvc" "1.13.0"
+=======
+"@parcel/css-win32-x64-msvc@1.13.1":
+  "integrity" "sha512-4yPYFQqUW4ZepIWa8rWiXnSDU6Nki2H9PB1NfTvr7IjN3WsNFrrVZFKsTg/KU2euYnasBXSZ+CMTUutvLZoVaA=="
+  "resolved" "https://registry.npmjs.org/@parcel/css-win32-x64-msvc/-/css-win32-x64-msvc-1.13.1.tgz"
+  "version" "1.13.1"
+
+"@parcel/css@^1.12.2":
+  "integrity" "sha512-pDv+1tPCk2ggGZ1Msl4r+lq7dPKjUBpZXJf/DMydTnYPxupwAjtmlmOd67CF3QHVLyKYB+viU4g5M8pVXCbaeA=="
+  "resolved" "https://registry.npmjs.org/@parcel/css/-/css-1.13.1.tgz"
+  "version" "1.13.1"
+  dependencies:
+    "detect-libc" "^1.0.3"
+  optionalDependencies:
+    "@parcel/css-darwin-arm64" "1.13.1"
+    "@parcel/css-darwin-x64" "1.13.1"
+    "@parcel/css-linux-arm-gnueabihf" "1.13.1"
+    "@parcel/css-linux-arm64-gnu" "1.13.1"
+    "@parcel/css-linux-arm64-musl" "1.13.1"
+    "@parcel/css-linux-x64-gnu" "1.13.1"
+    "@parcel/css-linux-x64-musl" "1.13.1"
+    "@parcel/css-win32-x64-msvc" "1.13.1"
+>>>>>>> f2d7e362008e31256678129d1268d1b82cf49bfb
 
 "@parcel/diagnostic@2.7.0":
   "integrity" "sha512-pdq/cTwVoL0n8yuDCRXFRSQHVWdmmIXPt3R3iT4KtYDYvOrMT2dLPT79IMqQkhYPANW8GuL15n/WxRngfRdkug=="
@@ -777,9 +800,15 @@
   "version" "3.1.0"
 
 "caniuse-lite@^1.0.30001370":
+<<<<<<< HEAD
   "integrity" "sha512-swMpEoTp5vDoGBZsYZX7L7nXHe6dsHxi9o6/LKf/f0LukVtnrxly5GVb/fWdCDTqi/yw6Km6tiJ0pmBacm0gbg=="
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001383.tgz"
   "version" "1.0.30001383"
+=======
+  "integrity" "sha512-znVbq4OUjqgLxMxoNX2ZeeLR0d7lcDiE5uJ4eUiWdml1J1EkxbnQq6opT9jb9SMfJxB0XA16/ziHwni4u1I3GQ=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001388.tgz"
+  "version" "1.0.30001388"
+>>>>>>> f2d7e362008e31256678129d1268d1b82cf49bfb
 
 "chalk@^2.0.0":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
@@ -858,9 +887,9 @@
   "version" "7.2.0"
 
 "core-js@^3.24.1":
-  "integrity" "sha512-0QTBSYSUZ6Gq21utGzkfITDylE8jWC9Ne1D2MrhvlsZBI1x39OdDIVbzSqtgMndIy6BlHxBXpMGqzZmnztg2rg=="
-  "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.24.1.tgz"
-  "version" "3.24.1"
+  "integrity" "sha512-CVU1xvJEfJGhyCpBrzzzU1kjCfgsGUxhEvwUV2e/cOedYWHdmluamx+knDnmhqALddMG16fZvIqvs9aijsHHaA=="
+  "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.25.0.tgz"
+  "version" "3.25.0"
 
 "cosmiconfig@^7.0.1":
   "integrity" "sha512-a1YWNUV2HwGimB7dU2s1wUMurNKjpx60HxBB6xUM8Re+2s1g1IIfJvFR0/iCF+XHdE0GMTKTuLR32UQff4TEyQ=="
@@ -950,9 +979,15 @@
   "version" "7.0.0"
 
 "electron-to-chromium@^1.4.202":
+<<<<<<< HEAD
   "integrity" "sha512-ejwIKXTg1wqbmkcRJh9Ur3hFGHFDZDw1POzdsVrB2WZjgRuRMHIQQKNpe64N/qh3ZtH2otEoRoS+s6arAAuAAw=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.233.tgz"
   "version" "1.4.233"
+=======
+  "integrity" "sha512-r20dUOtZ4vUPTqAajDGonIM1uas5tf85Up+wPdtNBNvBSqGCfkpvMVvQ1T8YJzPV9/Y9g3FbUDcXb94Rafycow=="
+  "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.240.tgz"
+  "version" "1.4.240"
+>>>>>>> f2d7e362008e31256678129d1268d1b82cf49bfb
 
 "entities@^2.0.0":
   "integrity" "sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A=="
@@ -1318,9 +1353,15 @@
   "version" "5.2.1"
 
 "sass@^1.38.0":
+<<<<<<< HEAD
   "integrity" "sha512-p7DTOzxkUPa/63FU0R3KApkRHwcVZYC0PLnLm5iyZACyp15qSi32x7zVUhRdABAATmkALqgGrjCJAcWvobmhHw=="
   "resolved" "https://registry.npmjs.org/sass/-/sass-1.54.5.tgz"
   "version" "1.54.5"
+=======
+  "integrity" "sha512-ib4JhLRRgbg6QVy6bsv5uJxnJMTS2soVcCp9Y88Extyy13A8vV0G1fAwujOzmNkFQbR3LvedudAMbtuNRPbQww=="
+  "resolved" "https://registry.npmjs.org/sass/-/sass-1.54.8.tgz"
+  "version" "1.54.8"
+>>>>>>> f2d7e362008e31256678129d1268d1b82cf49bfb
   dependencies:
     "chokidar" ">=3.0.0 <4.0.0"
     "immutable" "^4.0.0"
@@ -1419,9 +1460,9 @@
   "version" "0.20.2"
 
 "update-browserslist-db@^1.0.5":
-  "integrity" "sha512-dteFFpCyvuDdr9S/ff1ISkKt/9YZxKjI9WlRR99c180GaztJtRa/fn18FdxGVKVsnPY7/a/FDN68mcvUmP4U7Q=="
-  "resolved" "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.0.5.tgz"
-  "version" "1.0.5"
+  "integrity" "sha512-iN/XYesmZ2RmmWAiI4Z5rq0YqSiv0brj9Ce9CfhNE4xIW2h+MFxcgkxIzZ+ShkFPUkjU3gQ+3oypadD3RAMtrg=="
+  "resolved" "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.0.7.tgz"
+  "version" "1.0.7"
   dependencies:
     "escalade" "^3.1.1"
     "picocolors" "^1.0.0"
