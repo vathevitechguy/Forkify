@@ -1065,7 +1065,7 @@ module.exports = function(name) {
     return WellKnownSymbolsStore[name];
 };
 
-},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/use-symbol-as-uid":"2Ye8Q","../internals/symbol-constructor-detection":"8KyTD"}],"i1mHK":[function(require,module,exports) {
+},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/symbol-constructor-detection":"8KyTD","../internals/use-symbol-as-uid":"2Ye8Q"}],"i1mHK":[function(require,module,exports) {
 var IS_PURE = require("../internals/is-pure");
 var store = require("../internals/shared-store");
 (module.exports = function(key, value) {
@@ -1406,7 +1406,13 @@ module.exports = {
     getterFor: getterFor
 };
 
-},{"../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4","../internals/weak-map-basic-detection":"2PZTl"}],"eAjGz":[function(require,module,exports) {
+},{"../internals/weak-map-basic-detection":"2PZTl","../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4"}],"2PZTl":[function(require,module,exports) {
+var global = require("../internals/global");
+var isCallable = require("../internals/is-callable");
+var WeakMap = global.WeakMap;
+module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
+
+},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"eAjGz":[function(require,module,exports) {
 var shared = require("../internals/shared");
 var uid = require("../internals/uid");
 var keys = shared("keys");
@@ -1417,13 +1423,7 @@ module.exports = function(key) {
 },{"../internals/shared":"i1mHK","../internals/uid":"a3SEE"}],"661m4":[function(require,module,exports) {
 module.exports = {};
 
-},{}],"2PZTl":[function(require,module,exports) {
-var global = require("../internals/global");
-var isCallable = require("../internals/is-callable");
-var WeakMap = global.WeakMap;
-module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
-
-},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"9Z12i":[function(require,module,exports) {
+},{}],"9Z12i":[function(require,module,exports) {
 var hasOwn = require("../internals/has-own-property");
 var ownKeys = require("../internals/own-keys");
 var getOwnPropertyDescriptorModule = require("../internals/object-get-own-property-descriptor");
