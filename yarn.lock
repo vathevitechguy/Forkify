@@ -75,9 +75,9 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@lmdb/lmdb-win32-x64@2.5.2":
-  "integrity" "sha512-zrBczSbXKxEyK2ijtbRdICDygRqWSRPpZMN5dD1T8VMEW5RIhIbwFWw2phDRXuBQdVDpSjalCIUMWMV2h3JaZA=="
-  "resolved" "https://registry.npmjs.org/@lmdb/lmdb-win32-x64/-/lmdb-win32-x64-2.5.2.tgz"
+"@lmdb/lmdb-linux-x64@2.5.2":
+  "integrity" "sha512-xUdUfwDJLGjOUPH3BuPBt0NlIrR7f/QHKgu3GZIXswMMIihAekj2i97oI0iWG5Bok/b+OBjHPfa8IU9velnP/Q=="
+  "resolved" "https://registry.npmjs.org/@lmdb/lmdb-linux-x64/-/lmdb-linux-x64-2.5.2.tgz"
   "version" "2.5.2"
 
 "@mischnic/json-sourcemap@^0.1.0":
@@ -89,9 +89,9 @@
     "@lezer/lr" "^0.15.4"
     "json5" "^2.2.1"
 
-"@msgpackr-extract/msgpackr-extract-win32-x64@2.1.2":
-  "integrity" "sha512-rIZVR48zA8hGkHIK7ED6+ZiXsjRCcAVBJbm8o89OKAMTmEAQ2QvoOxoiu3w2isAaWwzgtQIOFIqHwvZDyLKCvw=="
-  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-2.1.2.tgz"
+"@msgpackr-extract/msgpackr-extract-linux-x64@2.1.2":
+  "integrity" "sha512-RjRoRxg7Q3kPAdUSC5EUUPlwfMkIVhmaRTIe+cqHbKrGZ4M6TyCA/b5qMaukQ/1CHWrqYY2FbKOAU8Hg0pQFzg=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-x64/-/msgpackr-extract-linux-x64-2.1.2.tgz"
   "version" "2.1.2"
 
 "@parcel/bundler-default@2.7.0":
@@ -195,26 +195,12 @@
     "nullthrows" "^1.1.1"
     "semver" "^5.7.1"
 
-"@parcel/css-win32-x64-msvc@1.13.1":
-  "integrity" "sha512-4yPYFQqUW4ZepIWa8rWiXnSDU6Nki2H9PB1NfTvr7IjN3WsNFrrVZFKsTg/KU2euYnasBXSZ+CMTUutvLZoVaA=="
-  "resolved" "https://registry.npmjs.org/@parcel/css-win32-x64-msvc/-/css-win32-x64-msvc-1.13.1.tgz"
-  "version" "1.13.1"
-
 "@parcel/css@^1.12.2":
-  "integrity" "sha512-pDv+1tPCk2ggGZ1Msl4r+lq7dPKjUBpZXJf/DMydTnYPxupwAjtmlmOd67CF3QHVLyKYB+viU4g5M8pVXCbaeA=="
-  "resolved" "https://registry.npmjs.org/@parcel/css/-/css-1.13.1.tgz"
-  "version" "1.13.1"
+  "integrity" "sha512-r5tJWe6NF6lesfPw1N3g7N7WUKpHqi2ONnw9wl5ccSGGIxkmgcPaPQxfvmhdjXvQnktSuIOR0HjQXVXu+/en/w=="
+  "resolved" "https://registry.npmjs.org/@parcel/css/-/css-1.14.0.tgz"
+  "version" "1.14.0"
   dependencies:
-    "detect-libc" "^1.0.3"
-  optionalDependencies:
-    "@parcel/css-darwin-arm64" "1.13.1"
-    "@parcel/css-darwin-x64" "1.13.1"
-    "@parcel/css-linux-arm-gnueabihf" "1.13.1"
-    "@parcel/css-linux-arm64-gnu" "1.13.1"
-    "@parcel/css-linux-arm64-musl" "1.13.1"
-    "@parcel/css-linux-x64-gnu" "1.13.1"
-    "@parcel/css-linux-x64-musl" "1.13.1"
-    "@parcel/css-win32-x64-msvc" "1.13.1"
+    "lightningcss" "^1.14.0"
 
 "@parcel/diagnostic@2.7.0":
   "integrity" "sha512-pdq/cTwVoL0n8yuDCRXFRSQHVWdmmIXPt3R3iT4KtYDYvOrMT2dLPT79IMqQkhYPANW8GuL15n/WxRngfRdkug=="
@@ -1102,6 +1088,32 @@
   "integrity" "sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA=="
   "resolved" "https://registry.npmjs.org/json5/-/json5-2.2.1.tgz"
   "version" "2.2.1"
+
+"lightningcss-linux-x64-gnu@1.14.0":
+  "integrity" "sha512-+dcNezLgUdAozcc6c0YSnZyRcOpro/yOOdy6ZjIwQtxej/5sEVJhXWbyHhdwSSlJssg/d+/7ihxEJIdZ8oDIfw=="
+  "resolved" "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.14.0.tgz"
+  "version" "1.14.0"
+
+"lightningcss-linux-x64-musl@1.14.0":
+  "integrity" "sha512-TI8tIaYv6SBpoBGatCG8gKQMxMCUcc+rvBSrqU7geHFBwzzyxOEHflENMclfwiYjTEM/HMdgJbWuHsIY3xvkuQ=="
+  "resolved" "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.14.0.tgz"
+  "version" "1.14.0"
+
+"lightningcss@^1.14.0":
+  "integrity" "sha512-Vwa1JWiLGRLntf4TXRu/zF2RaHRfJjbZwUzkl2C4LhnRQzsEwkyeAQjAxtpJ5NDnVVUf10q1olEzkFF4AWZLOw=="
+  "resolved" "https://registry.npmjs.org/lightningcss/-/lightningcss-1.14.0.tgz"
+  "version" "1.14.0"
+  dependencies:
+    "detect-libc" "^1.0.3"
+  optionalDependencies:
+    "lightningcss-darwin-arm64" "1.14.0"
+    "lightningcss-darwin-x64" "1.14.0"
+    "lightningcss-linux-arm-gnueabihf" "1.14.0"
+    "lightningcss-linux-arm64-gnu" "1.14.0"
+    "lightningcss-linux-arm64-musl" "1.14.0"
+    "lightningcss-linux-x64-gnu" "1.14.0"
+    "lightningcss-linux-x64-musl" "1.14.0"
+    "lightningcss-win32-x64-msvc" "1.14.0"
 
 "lines-and-columns@^1.1.6":
   "integrity" "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg=="

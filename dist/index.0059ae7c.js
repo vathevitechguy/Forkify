@@ -621,6 +621,7 @@ const controlAddBookmark = function() {
 const controlAddRecipe = async function(newRecipe) {
     try {
         // Render Spinner
+        console.log(newRecipe);
         (0, _addRecipeViewJsDefault.default).renderSpinner();
         await _modelJs.uploadRecipe(newRecipe);
         // Render new recipe
@@ -660,7 +661,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","./views/sortResultView.js":"c1Psm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/addToCartView.js":"9BzjD"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/sortResultView.js":"c1Psm","./views/addToCartView.js":"9BzjD"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1085,10 +1086,10 @@ var store = require("../internals/shared-store");
 (module.exports = function(key, value) {
     return store[key] || (store[key] = value !== undefined ? value : {});
 })("versions", []).push({
-    version: "3.25.0",
+    version: "3.25.1",
     mode: IS_PURE ? "pure" : "global",
     copyright: "\xa9 2014-2022 Denis Pushkarev (zloirock.ru)",
-    license: "https://github.com/zloirock/core-js/blob/v3.25.0/LICENSE",
+    license: "https://github.com/zloirock/core-js/blob/v3.25.1/LICENSE",
     source: "https://github.com/zloirock/core-js"
 });
 
@@ -1920,23 +1921,29 @@ const clearBookmarks = function() {
 };
 const uploadRecipe = async function(newRecipe) {
     try {
-        const testing = Object.entries(newRecipe).filter((entry, i)=>{
-            const filterData = (entry)=>{
-                const ingtest = entry[1].split(",").map((el)=>el.trim());
-                console.log(ingtest);
-                return ingtest;
-            };
-            const ing1 = entry[0].startsWith(`ingredient-1`) && entry[1] !== "" ? filterData(entry) : "";
-            const ing2 = entry[0].startsWith(`ingredient-2`) && entry[1] !== "" ? filterData(entry) : "";
-            return [
-                [
-                    ing1
-                ],
-                [
-                    ing2
-                ]
-            ];
+        /*const testing = Object.entries(newRecipe)
+      .filter((entry, i) => {
+        const filterData = (entry) => {
+          const ingtest = entry[1].split(',').map((el) => el.trim());
+
+          console.log(ingtest);
+          return ingtest;
+        };
+
+        const ing1 =
+          entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
+            ? filterData(entry)
+            : '';
+
+        const ing2 =
+          entry[0].startsWith(`ingredient-2`) && entry[1] !== ''
+            ? filterData(entry)
+            : '';
+
+        return [[ing1], [ing2]];
+
         // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
+
         // }
         // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
         //   console.log('Ingreient 2 Present ' + i);
@@ -1946,31 +1953,24 @@ const uploadRecipe = async function(newRecipe) {
         //     .reduce((prev, cur) => prev.concat(cur));
         //   return ing2;
         // }
-        }).reduce((prev, cur)=>{
-            return prev.concat(cur);
-        }).filter((el)=>!el.startsWith(`ingredient`));
-        console.log(testing);
-        /*const ingredientsGrp = Object.entries(newRecipe)
-      .filter(
-        (entry, i) => entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
-      )
-      .map((ing, i) => {
-        const ingGrp = ing[1]
-          .split(',')
-          .map((el) => el.trim())
-          .reduce((prev, cur) => prev.concat(cur));
+      })
+      .reduce((prev, cur) => {
+        return prev.concat(cur);
+      })
+      .filter((el) => !el.startsWith(`ingredient`));
 
-        return ingGrp;
-      });
-
-    console.log(ingredientsGrp);
-
-    const [quantity, unit, description] = ingredientsGrp;
-    const ingredients = {
-      quantity: quantity ? +quantity : null,
-      unit,
-      description,
-    };*/ const recipe = {
+    console.log(testing); */ const ingredientsGrp = Object.entries(newRecipe).filter((entry, i)=>entry[0].startsWith(`ingredient-${i + 1}`) && entry[1] !== "").map((ing, i)=>{
+            const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
+            return ingGrp;
+        });
+        console.log(ingredientsGrp);
+        const [quantity, unit, description] = ingredientsGrp;
+        const ingredients = {
+            quantity: quantity ? +quantity : null,
+            unit,
+            description
+        };
+        const recipe = {
             title: newRecipe.title,
             source_url: newRecipe.sourceUrl,
             image_url: newRecipe.image,
@@ -3424,6 +3424,6 @@ class CartView extends (0, _viewJsDefault.default) {
 }
 exports.default = new CartView();
 
-},{"./view.js":"4RJvw","url:../../img/icons.svg":"anUGa","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}]},["3pmDY","2dUup"], "2dUup", "parcelRequire3a11")
+},{"./view.js":"4RJvw","url:../../img/icons.svg":"anUGa","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["3pmDY","2dUup"], "2dUup", "parcelRequire3a11")
 
 //# sourceMappingURL=index.0059ae7c.js.map
