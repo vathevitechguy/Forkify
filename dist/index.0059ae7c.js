@@ -1898,20 +1898,21 @@ const clearBookmarks = function() {
 const uploadRecipe = async function(newRecipe) {
     try {
         const testing = Object.entries(newRecipe).filter((entry, i)=>{
-            const filterData = function(entry) {
-                const ingred = entry;
-                const ingtest = ingred[1].split(",").map((el)=>{
-                    return el.trim();
-                });
-                // .reduce((prev, cur) => {
-                //   console.log(prev);
-                //   return prev.concat(cur);
-                // });
+            const filterData = (entry)=>{
+                const ingtest = entry[1].split(",").map((el)=>el.trim());
                 console.log(ingtest);
                 return ingtest;
             };
-            const data = entry[0].startsWith(`ingredient-1`) && entry[1] !== "" ? filterData(entry) : "";
-            return data;
+            const ing1 = entry[0].startsWith(`ingredient-1`) && entry[1] !== "" ? filterData(entry) : "";
+            const ing2 = entry[0].startsWith(`ingredient-2`) && entry[1] !== "" ? filterData(entry) : "";
+            return [
+                [
+                    ing1
+                ],
+                [
+                    ing2
+                ]
+            ];
         // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
         // }
         // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
@@ -1922,7 +1923,9 @@ const uploadRecipe = async function(newRecipe) {
         //     .reduce((prev, cur) => prev.concat(cur));
         //   return ing2;
         // }
-        });
+        }).reduce((prev, cur)=>{
+            return prev.concat(cur);
+        }).filter((el)=>!el.startsWith(`ingredient`));
         console.log(testing);
         /*const ingredientsGrp = Object.entries(newRecipe)
       .filter(
