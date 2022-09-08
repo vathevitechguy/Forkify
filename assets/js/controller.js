@@ -10,6 +10,7 @@ import bookmarkView from './views/bookmarkView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { MODAL_CLOSE_TIME } from './config.js';
 import sortResultView from './views/sortResultView.js';
+import addToCartView from './views/addToCartView.js';
 
 if (module.hot) {
   module.hot.accept;
@@ -120,12 +121,25 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderError(err.message);
   }
 };
+const controlCart = function () {
+  addToCartView.render(model.state.cart);
+};
+
+const controlAddToCart = async function () {
+  console.log('Working');
+  model.cartIngredient(model.state.recipe.ingredients);
+  console.log(model.state.cart);
+  controlCart();
+  // addToCartView.update(model.state.recipe);
+};
 
 const init = function () {
   bookmarkView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
+  recipeView.addHandlerAddToCart(controlAddToCart);
+  // addToCartView.addHandlerRender(controlAddToCart);
   searchView.addHandlerSearch(controlSearchResults);
   sortResultView.addHandlerSort(controlSorting);
   paginationView.addHandlerClick(controlPagination);

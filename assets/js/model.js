@@ -3,6 +3,7 @@ import { API_URL, KEY, RESULT_PER_PAGE } from './config.js';
 import { getJSON, sendJSON } from './helpers.js';
 
 // #630e21405a1b010016058ea4
+// #62f5b3145fdbe8001679d56d
 export const state = {
   recipe: {},
   search: {
@@ -13,6 +14,7 @@ export const state = {
     resultsPerPage: RESULT_PER_PAGE,
   },
   bookmarks: [],
+  cart: [],
 };
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
@@ -115,6 +117,14 @@ export const updateServings = function (newServings) {
   });
 
   state.recipe.servings = newServings;
+};
+const saveCartLocally = function () {
+  localStorage.setItem('Cart', JSON.stringify(state.cart));
+};
+
+export const cartIngredient = function (recipe) {
+  state.cart.push(recipe);
+  saveCartLocally();
 };
 
 const saveBookmarksLocally = function () {

@@ -551,6 +551,8 @@ var _addRecipeViewJsDefault = parcelHelpers.interopDefault(_addRecipeViewJs);
 var _configJs = require("./config.js");
 var _sortResultViewJs = require("./views/sortResultView.js");
 var _sortResultViewJsDefault = parcelHelpers.interopDefault(_sortResultViewJs);
+var _addToCartViewJs = require("./views/addToCartView.js");
+var _addToCartViewJsDefault = parcelHelpers.interopDefault(_addToCartViewJs);
 if (module.hot) module.hot.accept;
 const controlRecipes = async function() {
     try {
@@ -634,11 +636,23 @@ const controlAddRecipe = async function(newRecipe) {
         (0, _addRecipeViewJsDefault.default).renderError(err.message);
     }
 };
+const controlCart = function() {
+    (0, _addToCartViewJsDefault.default).render(_modelJs.state.cart);
+};
+const controlAddToCart = async function() {
+    console.log("Working");
+    _modelJs.cartIngredient(_modelJs.state.recipe.ingredients);
+    console.log(_modelJs.state.cart);
+    controlCart();
+// addToCartView.update(model.state.recipe);
+};
 const init = function() {
     (0, _bookmarkViewJsDefault.default).addHandlerRender(controlBookmarks);
     (0, _recipeViewsJsDefault.default).addHandlerRender(controlRecipes);
     (0, _recipeViewsJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _recipeViewsJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
+    (0, _recipeViewsJsDefault.default).addHandlerAddToCart(controlAddToCart);
+    // addToCartView.addHandlerRender(controlAddToCart);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _sortResultViewJsDefault.default).addHandlerSort(controlSorting);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
@@ -646,7 +660,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","./views/sortResultView.js":"c1Psm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","./views/sortResultView.js":"c1Psm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/addToCartView.js":"9BzjD"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1065,7 +1079,7 @@ module.exports = function(name) {
     return WellKnownSymbolsStore[name];
 };
 
-},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/symbol-constructor-detection":"8KyTD","../internals/use-symbol-as-uid":"2Ye8Q"}],"i1mHK":[function(require,module,exports) {
+},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/use-symbol-as-uid":"2Ye8Q","../internals/symbol-constructor-detection":"8KyTD"}],"i1mHK":[function(require,module,exports) {
 var IS_PURE = require("../internals/is-pure");
 var store = require("../internals/shared-store");
 (module.exports = function(key, value) {
@@ -1406,13 +1420,7 @@ module.exports = {
     getterFor: getterFor
 };
 
-},{"../internals/weak-map-basic-detection":"2PZTl","../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4"}],"2PZTl":[function(require,module,exports) {
-var global = require("../internals/global");
-var isCallable = require("../internals/is-callable");
-var WeakMap = global.WeakMap;
-module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
-
-},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"eAjGz":[function(require,module,exports) {
+},{"../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4","../internals/weak-map-basic-detection":"2PZTl"}],"eAjGz":[function(require,module,exports) {
 var shared = require("../internals/shared");
 var uid = require("../internals/uid");
 var keys = shared("keys");
@@ -1423,7 +1431,13 @@ module.exports = function(key) {
 },{"../internals/shared":"i1mHK","../internals/uid":"a3SEE"}],"661m4":[function(require,module,exports) {
 module.exports = {};
 
-},{}],"9Z12i":[function(require,module,exports) {
+},{}],"2PZTl":[function(require,module,exports) {
+var global = require("../internals/global");
+var isCallable = require("../internals/is-callable");
+var WeakMap = global.WeakMap;
+module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
+
+},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"9Z12i":[function(require,module,exports) {
 var hasOwn = require("../internals/has-own-property");
 var ownKeys = require("../internals/own-keys");
 var getOwnPropertyDescriptorModule = require("../internals/object-get-own-property-descriptor");
@@ -1763,6 +1777,7 @@ parcelHelpers.export(exports, "loadSearchResult", ()=>loadSearchResult);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
 parcelHelpers.export(exports, "getSortedResult", ()=>getSortedResult);
 parcelHelpers.export(exports, "updateServings", ()=>updateServings);
+parcelHelpers.export(exports, "cartIngredient", ()=>cartIngredient);
 parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
 parcelHelpers.export(exports, "deleteBookmark", ()=>deleteBookmark);
 parcelHelpers.export(exports, "uploadRecipe", ()=>uploadRecipe);
@@ -1778,7 +1793,8 @@ const state = {
         sortStatus: Boolean,
         resultsPerPage: (0, _configJs.RESULT_PER_PAGE)
     },
-    bookmarks: []
+    bookmarks: [],
+    cart: []
 };
 const createRecipeObject = function(data) {
     const { recipe  } = data.data;
@@ -1862,6 +1878,13 @@ const updateServings = function(newServings) {
         ing.quantity = ing.quantity * newServings / state.recipe.servings;
     });
     state.recipe.servings = newServings;
+};
+const saveCartLocally = function() {
+    localStorage.setItem("Cart", JSON.stringify(state.cart));
+};
+const cartIngredient = function(recipe) {
+    state.cart.push(recipe);
+    saveCartLocally();
 };
 const saveBookmarksLocally = function() {
     localStorage.setItem("Bookmarks", JSON.stringify(state.bookmarks));
@@ -2652,6 +2675,13 @@ class RecipeView extends (0, _viewJsDefault.default) {
             if (+updateTo > 0) handler(+updateTo);
         });
     }
+    addHandlerAddToCart(handler) {
+        this._parentEl.addEventListener("click", function(e) {
+            const ingBtn = e.target.closest(".recipe__ingredient");
+            if (!ingBtn) return;
+            handler();
+        });
+    }
     addHandlerAddBookmark(handler) {
         this._parentEl.addEventListener("click", function(e) {
             const btn_bookmark = e.target.closest(".btn--bookmark");
@@ -3362,6 +3392,38 @@ class sortResultView extends (0, _viewJsDefault.default) {
 }
 exports.default = new sortResultView();
 
-},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["3pmDY","2dUup"], "2dUup", "parcelRequire3a11")
+},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9BzjD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./view.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _fractional = require("fractional");
+class CartView extends (0, _viewJsDefault.default) {
+    _parentEl = document.querySelector(".cart__list");
+    _errorMessage = "No ingredient added yet. Find a nice recipe and add its ingredients :)";
+    _message = "";
+    addHandlerRender(handler) {
+        window.addEventListener("load", handler);
+    }
+    _generateMarkup() {
+        const id = window.location.hash.slice(1);
+        return this._data.map((ing, i)=>{
+            return `
+        <li class="recipe__ingredient">
+            <div class="recipe__quantity">${ing[i]?.quantity ? new (0, _fractional.Fraction)(ing[i].quantity).toString() : ""}</div>
+            <div class="recipe__description">
+            <span class="recipe__unit">${ing[i]?.unit}</span>
+            ${ing[i]?.description}
+            </div>
+        </li>
+    `;
+        }).join("");
+    }
+}
+exports.default = new CartView();
+
+},{"./view.js":"4RJvw","url:../../img/icons.svg":"anUGa","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}]},["3pmDY","2dUup"], "2dUup", "parcelRequire3a11")
 
 //# sourceMappingURL=index.0059ae7c.js.map

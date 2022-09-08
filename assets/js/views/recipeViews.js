@@ -24,6 +24,16 @@ class RecipeView extends View {
     });
   }
 
+  addHandlerAddToCart(handler) {
+    this._parentEl.addEventListener('click', function (e) {
+      const ingBtn = e.target.closest('.recipe__ingredient');
+
+      if (!ingBtn) return;
+
+      handler();
+    });
+  }
+
   addHandlerAddBookmark(handler) {
     this._parentEl.addEventListener('click', function (e) {
       const btn_bookmark = e.target.closest('.btn--bookmark');
