@@ -214,28 +214,32 @@ export const uploadRecipe = async function (newRecipe) {
 
     console.log(testing); */
 
-    const ingredientsGrp = Object.entries(newRecipe)
-      .filter(
-        (entry, i) =>
-          entry[0].startsWith(`ingredient-${i + 1}`) && entry[1] !== ''
-      )
-      .map((ing, i) => {
-        const ingGrp = ing[1]
-          .split(',')
-          .map((el) => el.trim())
-          .reduce((prev, cur) => prev.concat(cur));
+    const ingArr = [];
+    for (let index = 1; index < 6; index++) {
+      const ingredientsGrp = Object.entries(newRecipe)
+        .filter(
+          (entry, i = 6) =>
+            entry[0].startsWith(`ingredient-${index}`) && entry[1] !== ''
+        )
+        .map((ing, i) => {
+          const ingGrp = ing[1]
+            .split(',')
+            .map((el) => el.trim())
+            .reduce((prev, cur) => prev.concat(cur));
 
-        return ingGrp;
-      });
+          return ingGrp;
+        });
+      console.log(ingredientsGrp);
+      const [quantity, unit, description] = ingredientsGrp;
+      const ingredients = {
+        quantity: quantity ? +quantity : null,
+        unit,
+        description,
+      };
 
-    console.log(ingredientsGrp);
-
-    const [quantity, unit, description] = ingredientsGrp;
-    const ingredients = {
-      quantity: quantity ? +quantity : null,
-      unit,
-      description,
-    };
+      ingArr.push(ingredients);
+      console.log(ingArr);
+    }
 
     const recipe = {
       title: newRecipe.title,

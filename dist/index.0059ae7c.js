@@ -661,7 +661,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/sortResultView.js":"c1Psm","./views/addToCartView.js":"9BzjD"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"dkYPG","./views/recipeViews.js":"l1FUm","regenerator-runtime/runtime":"dXNgZ","./views/searchView.js":"2DdtC","./views/resultsView.js":"i04yS","./views/paginationView.js":"1kJXl","./views/bookmarkView.js":"lRiUL","./views/addRecipeView.js":"hbBDH","./config.js":"c93Tb","./views/sortResultView.js":"c1Psm","./views/addToCartView.js":"9BzjD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1080,7 +1080,7 @@ module.exports = function(name) {
     return WellKnownSymbolsStore[name];
 };
 
-},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/use-symbol-as-uid":"2Ye8Q","../internals/symbol-constructor-detection":"8KyTD"}],"i1mHK":[function(require,module,exports) {
+},{"../internals/global":"i8HOC","../internals/shared":"i1mHK","../internals/has-own-property":"gC2Q5","../internals/uid":"a3SEE","../internals/symbol-constructor-detection":"8KyTD","../internals/use-symbol-as-uid":"2Ye8Q"}],"i1mHK":[function(require,module,exports) {
 var IS_PURE = require("../internals/is-pure");
 var store = require("../internals/shared-store");
 (module.exports = function(key, value) {
@@ -1421,7 +1421,13 @@ module.exports = {
     getterFor: getterFor
 };
 
-},{"../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4","../internals/weak-map-basic-detection":"2PZTl"}],"eAjGz":[function(require,module,exports) {
+},{"../internals/weak-map-basic-detection":"2PZTl","../internals/global":"i8HOC","../internals/function-uncurry-this":"7GlkT","../internals/is-object":"Z0pBo","../internals/create-non-enumerable-property":"8CL42","../internals/has-own-property":"gC2Q5","../internals/shared-store":"l4ncH","../internals/shared-key":"eAjGz","../internals/hidden-keys":"661m4"}],"2PZTl":[function(require,module,exports) {
+var global = require("../internals/global");
+var isCallable = require("../internals/is-callable");
+var WeakMap = global.WeakMap;
+module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
+
+},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"eAjGz":[function(require,module,exports) {
 var shared = require("../internals/shared");
 var uid = require("../internals/uid");
 var keys = shared("keys");
@@ -1432,13 +1438,7 @@ module.exports = function(key) {
 },{"../internals/shared":"i1mHK","../internals/uid":"a3SEE"}],"661m4":[function(require,module,exports) {
 module.exports = {};
 
-},{}],"2PZTl":[function(require,module,exports) {
-var global = require("../internals/global");
-var isCallable = require("../internals/is-callable");
-var WeakMap = global.WeakMap;
-module.exports = isCallable(WeakMap) && /native code/.test(String(WeakMap));
-
-},{"../internals/global":"i8HOC","../internals/is-callable":"l3Kyn"}],"9Z12i":[function(require,module,exports) {
+},{}],"9Z12i":[function(require,module,exports) {
 var hasOwn = require("../internals/has-own-property");
 var ownKeys = require("../internals/own-keys");
 var getOwnPropertyDescriptorModule = require("../internals/object-get-own-property-descriptor");
@@ -1959,17 +1959,22 @@ const uploadRecipe = async function(newRecipe) {
       })
       .filter((el) => !el.startsWith(`ingredient`));
 
-    console.log(testing); */ const ingredientsGrp = Object.entries(newRecipe).filter((entry, i)=>entry[0].startsWith(`ingredient-${i + 1}`) && entry[1] !== "").map((ing, i)=>{
-            const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
-            return ingGrp;
-        });
-        console.log(ingredientsGrp);
-        const [quantity, unit, description] = ingredientsGrp;
-        const ingredients = {
-            quantity: quantity ? +quantity : null,
-            unit,
-            description
-        };
+    console.log(testing); */ const ingArr = [];
+        for(let index = 1; index < 6; index++){
+            const ingredientsGrp = Object.entries(newRecipe).filter((entry, i = 6)=>entry[0].startsWith(`ingredient-${index}`) && entry[1] !== "").map((ing, i)=>{
+                const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
+                return ingGrp;
+            });
+            console.log(ingredientsGrp);
+            const [quantity, unit, description] = ingredientsGrp;
+            const ingredients1 = {
+                quantity: quantity ? +quantity : null,
+                unit,
+                description
+            };
+            ingArr.push(ingredients1);
+            console.log(ingArr);
+        }
         const recipe = {
             title: newRecipe.title,
             source_url: newRecipe.sourceUrl,
