@@ -164,40 +164,43 @@ const clearBookmarks = function () {
 
 export const uploadRecipe = async function (newRecipe) {
   try {
-    const testing = Object.entries(newRecipe).filter((entry, i) => {
-      const filterData = function (entry) {
-        const ingred = entry;
-        const ingtest = ingred[1].split(',').map((el) => {
-          return el.trim();
-        });
-        // .reduce((prev, cur) => {
-        //   console.log(prev);
-        //   return prev.concat(cur);
-        // });
+    const testing = Object.entries(newRecipe)
+      .filter((entry, i) => {
+        const filterData = (entry) => {
+          const ingtest = entry[1].split(',').map((el) => el.trim());
 
-        console.log(ingtest);
-        return ingtest;
-      };
+          console.log(ingtest);
+          return ingtest;
+        };
 
-      const data =
-        entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
-          ? filterData(entry)
-          : '';
+        const ing1 =
+          entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
+            ? filterData(entry)
+            : '';
 
-      return data;
+        const ing2 =
+          entry[0].startsWith(`ingredient-2`) && entry[1] !== ''
+            ? filterData(entry)
+            : '';
 
-      // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
+        return [[ing1], [ing2]];
 
-      // }
-      // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
-      //   console.log('Ingreient 2 Present ' + i);
-      //   const ing2 = entry[1]
-      //     .split(',')
-      //     .map((el) => el.trim())
-      //     .reduce((prev, cur) => prev.concat(cur));
-      //   return ing2;
-      // }
-    });
+        // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
+
+        // }
+        // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
+        //   console.log('Ingreient 2 Present ' + i);
+        //   const ing2 = entry[1]
+        //     .split(',')
+        //     .map((el) => el.trim())
+        //     .reduce((prev, cur) => prev.concat(cur));
+        //   return ing2;
+        // }
+      })
+      .reduce((prev, cur) => {
+        return prev.concat(cur);
+      })
+      .filter((el) => !el.startsWith(`ingredient`));
 
     console.log(testing);
 
