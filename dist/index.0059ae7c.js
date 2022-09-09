@@ -621,7 +621,6 @@ const controlAddBookmark = function() {
 const controlAddRecipe = async function(newRecipe) {
     try {
         // Render Spinner
-        console.log(newRecipe);
         (0, _addRecipeViewJsDefault.default).renderSpinner();
         await _modelJs.uploadRecipe(newRecipe);
         // Render new recipe
@@ -1921,60 +1920,29 @@ const clearBookmarks = function() {
 };
 const uploadRecipe = async function(newRecipe) {
     try {
-        /*const testing = Object.entries(newRecipe)
-      .filter((entry, i) => {
-        const filterData = (entry) => {
-          const ingtest = entry[1].split(',').map((el) => el.trim());
-
-          console.log(ingtest);
-          return ingtest;
-        };
-
-        const ing1 =
-          entry[0].startsWith(`ingredient-1`) && entry[1] !== ''
-            ? filterData(entry)
-            : '';
-
-        const ing2 =
-          entry[0].startsWith(`ingredient-2`) && entry[1] !== ''
-            ? filterData(entry)
-            : '';
-
-        return [[ing1], [ing2]];
-
-        // if (entry[0].startsWith(`ingredient-1`) && entry[1] !== '') {
-
-        // }
-        // if (entry[0].startsWith(`ingredient-2`) && entry[1] !== '') {
-        //   console.log('Ingreient 2 Present ' + i);
-        //   const ing2 = entry[1]
-        //     .split(',')
-        //     .map((el) => el.trim())
-        //     .reduce((prev, cur) => prev.concat(cur));
-        //   return ing2;
-        // }
-      })
-      .reduce((prev, cur) => {
-        return prev.concat(cur);
-      })
-      .filter((el) => !el.startsWith(`ingredient`));
-
-    console.log(testing); */ const ingArr = [];
+        let ingredientsArr = [];
         for(let index = 1; index < 6; index++){
             const ingredientsGrp = Object.entries(newRecipe).filter((entry, i = 6)=>entry[0].startsWith(`ingredient-${index}`) && entry[1] !== "").map((ing, i)=>{
-                const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>prev.concat(cur));
+                const ingGrp = ing[1].split(",").map((el)=>el.trim()).reduce((prev, cur)=>[
+                        ...prev,
+                        cur
+                    ]);
                 return ingGrp;
             });
+            if (!ingredientsGrp.length) break;
             console.log(ingredientsGrp);
             const [quantity, unit, description] = ingredientsGrp;
-            const ingredients1 = {
+            const ingredients = {
                 quantity: quantity ? +quantity : null,
                 unit,
                 description
             };
-            ingArr.push(ingredients1);
-            console.log(ingArr);
+            ingredientsArr = [
+                ...ingredientsArr,
+                ingredients
+            ];
         }
+        console.log(ingredientsArr);
         const recipe = {
             title: newRecipe.title,
             source_url: newRecipe.sourceUrl,
@@ -1982,7 +1950,7 @@ const uploadRecipe = async function(newRecipe) {
             publisher: newRecipe.publisher,
             cooking_time: +newRecipe.cookingTime,
             servings: +newRecipe.servings,
-            ingredients
+            ingredients: ingredientsArr
         };
         console.log(recipe);
         const data = await (0, _helpersJs.sendJSON)(`${(0, _configJs.API_URL)}?key=${(0, _configJs.KEY)}`, recipe);
