@@ -110,6 +110,7 @@ const controlAddRecipe = async function (newRecipe) {
 
     // Succes message
     addRecipeView.renderMessage();
+    // addRecipeView.render();
 
     // Close Modal
     setTimeout(() => addRecipeView._toggleWindow(), MODAL_CLOSE_TIME * 1000);

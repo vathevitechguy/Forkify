@@ -34,7 +34,7 @@ export const sendJSON = async function (url, uploadData) {
     const res = await Promise.race([fetcher, timeout(TIMEOUT_SEC)]);
     const data = await res.json();
 
-    if (!res.ok) throw new Error(`${data.message} ${res.status}`);
+    if (!res.ok) throw new Error(`${data.message} ${res.status}. Try Again!`);
     return data;
   } catch (err) {
     throw err;

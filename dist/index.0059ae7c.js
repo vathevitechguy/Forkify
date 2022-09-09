@@ -627,6 +627,7 @@ const controlAddRecipe = async function(newRecipe) {
         (0, _recipeViewsJsDefault.default).render(_modelJs.state.recipe);
         // Succes message
         (0, _addRecipeViewJsDefault.default).renderMessage();
+        // addRecipeView.render();
         // Close Modal
         setTimeout(()=>(0, _addRecipeViewJsDefault.default)._toggleWindow(), (0, _configJs.MODAL_CLOSE_TIME) * 1000);
         // Render to bookmark View
@@ -2536,11 +2537,13 @@ parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
 parcelHelpers.export(exports, "RESULT_PER_PAGE", ()=>RESULT_PER_PAGE);
 parcelHelpers.export(exports, "KEY", ()=>KEY);
 parcelHelpers.export(exports, "MODAL_CLOSE_TIME", ()=>MODAL_CLOSE_TIME);
+parcelHelpers.export(exports, "RENDER_FORM_TIME", ()=>RENDER_FORM_TIME);
 const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes/";
 const TIMEOUT_SEC = 10;
 const RESULT_PER_PAGE = 10;
 const KEY = "973a4ce5-97ee-4ddb-ba42-bb259bd38d43";
 const MODAL_CLOSE_TIME = 3.5;
+const RENDER_FORM_TIME = 0.5;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -2614,7 +2617,7 @@ const sendJSON = async function(url, uploadData) {
             timeout((0, _configJs.TIMEOUT_SEC))
         ]);
         const data = await res.json();
-        if (!res.ok) throw new Error(`${data.message} ${res.status}`);
+        if (!res.ok) throw new Error(`${data.message} ${res.status}. Try Again!`);
         return data;
     } catch (err) {
         throw err;
@@ -3287,6 +3290,7 @@ exports.default = new BookmarksView();
 },{"./view.js":"4RJvw","url:../../img/icons.svg":"anUGa","./preView.js":"cklqT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hbBDH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+var _configJs = require("../config.js");
 var _viewJs = require("./view.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 class AddRecipeView extends (0, _viewJsDefault.default) {
@@ -3309,8 +3313,16 @@ class AddRecipeView extends (0, _viewJsDefault.default) {
     _addHandlerShowWindow() {
         this._btnOpen.addEventListener("click", this._toggleWindow.bind(this));
     }
+    renderForm() {
+        this._clear();
+        this._parentEl.insertAdjacentHTML("afterbegin", this._generateMarkup());
+    }
+    execute() {
+        this._toggleWindow();
+        setTimeout(()=>this.renderForm(), (0, _configJs.RENDER_FORM_TIME) * 1000);
+    }
     _addHandlerHideWindow() {
-        this._btnClose.addEventListener("click", this._toggleWindow.bind(this));
+        this._btnClose.addEventListener("click", this.execute.bind(this));
         this._overlay.addEventListener("click", this._toggleWindow.bind(this));
     }
     addHandlerUpload(handler) {
@@ -3324,11 +3336,174 @@ class AddRecipeView extends (0, _viewJsDefault.default) {
             handler(data);
         });
     }
-    _generateMarkup() {}
+    _generateMarkup() {
+        return `
+    <div class="upload__column">
+          <h3 class="upload__heading">Recipe data</h3>
+          <label>Title</label>
+          <input value="TEST" required name="title" type="text" />
+          <label>URL</label>
+          <input value="TEST" required name="sourceUrl" type="text" />
+          <label>Image URL</label>
+          <input value="TEST" required name="image" type="text" />
+          <label>Publisher</label>
+          <input value="TEST" required name="publisher" type="text" />
+          <label>Prep time</label>
+          <input value="23" required name="cookingTime" type="number" />
+          <label>Servings</label>
+          <input value="23" required name="servings" type="number" />
+        </div>
+
+        <div class="upload__column">
+          <h3 class="upload__heading">Ingredients</h3>
+          <label>Ingredient 1</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              value="13"
+              type="text"
+              name="ingredient-1-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              value="33"
+              type="text"
+              name="ingredient-1-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              value="444"
+              type="text"
+              name="ingredient-1-desc"
+              placeholder="Description"
+            />
+          </div>
+
+          <label>Ingredient 2</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-2-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-2-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              type="text"
+              name="ingredient-2-desc"
+              placeholder="Description"
+            />
+          </div>
+
+          <label>Ingredient 3</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-3-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-3-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              type="text"
+              name="ingredient-3-desc"
+              placeholder="Description"
+            />
+          </div>
+
+          <label>Ingredient 4</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-4-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-4-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              type="text"
+              name="ingredient-4-desc"
+              placeholder="Description"
+            />
+          </div>
+
+          <label>Ingredient 5</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-5-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-5-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              type="text"
+              name="ingredient-5-desc"
+              placeholder="Description"
+            />
+          </div>
+
+          <label>Ingredient 6</label>
+          <div class="ingredient--inputs">
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-6-quantity"
+              placeholder="Quantity"
+            />
+            <input
+              class="ing"
+              type="text"
+              name="ingredient-6-unit"
+              placeholder="Unit"
+            />
+            <input
+              class="ingDes"
+              type="text"
+              name="ingredient-6-desc"
+              placeholder="Description"
+            />
+          </div>
+        </div>
+
+        <button class="btn upload__btn">
+          <svg>
+            <use href="assets/img/icons.svg#icon-upload-cloud"></use>
+          </svg>
+          <span>Upload</span>
+        </button>
+    `;
+    }
 }
 exports.default = new AddRecipeView();
 
-},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c1Psm":[function(require,module,exports) {
+},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../config.js":"c93Tb"}],"c1Psm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");

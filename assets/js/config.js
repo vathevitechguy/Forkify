@@ -3,3 +3,4 @@ export const TIMEOUT_SEC = 10;
 export const RESULT_PER_PAGE = 10;
 export const KEY = '973a4ce5-97ee-4ddb-ba42-bb259bd38d43';
 export const MODAL_CLOSE_TIME = 3.5;
+export const RENDER_FORM_TIME = 0.5;
