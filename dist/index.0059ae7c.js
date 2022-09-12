@@ -640,12 +640,17 @@ const controlAddRecipe = async function(newRecipe) {
 const controlCart = function() {
     (0, _addToCartViewJsDefault.default).render(_modelJs.state.cart);
 };
-const controlAddToCart = async function() {
-    console.log("Working");
-    _modelJs.cartIngredient(_modelJs.state.recipe.ingredients);
-    console.log(_modelJs.state.cart);
-    controlCart();
-// addToCartView.update(model.state.recipe);
+const controlAddToCart = async function(id) {
+    _modelJs.state.recipe.ingredients.filter((ing)=>{
+        if (ing.id === +id) {
+            if (ing.cartedStatus) return;
+            _modelJs.cartIngredient(ing);
+            ing.cartedStatus = true;
+            controlCart();
+            console.log(_modelJs.state.cart);
+            return ing;
+        }
+    });
 };
 const init = function() {
     (0, _bookmarkViewJsDefault.default).addHandlerRender(controlBookmarks);
@@ -653,7 +658,6 @@ const init = function() {
     (0, _recipeViewsJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _recipeViewsJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
     (0, _recipeViewsJsDefault.default).addHandlerAddToCart(controlAddToCart);
-    // addToCartView.addHandlerRender(controlAddToCart);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _sortResultViewJsDefault.default).addHandlerSort(controlSorting);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
@@ -1883,10 +1887,15 @@ const updateServings = function(newServings) {
 const saveCartLocally = function() {
     localStorage.setItem("Cart", JSON.stringify(state.cart));
 };
-const cartIngredient = function(recipe) {
-    state.cart.push(recipe);
+const cartIngredient = function(ingredient) {
+    state.cart.push(ingredient);
     saveCartLocally();
 };
+const getCartItems = function() {
+    const cartData = JSON.parse(localStorage.getItem("Cart"));
+    if (!cartData) return;
+    state.cart = cartData;
+}();
 const saveBookmarksLocally = function() {
     localStorage.setItem("Bookmarks", JSON.stringify(state.bookmarks));
 };
@@ -2655,7 +2664,8 @@ class RecipeView extends (0, _viewJsDefault.default) {
         this._parentEl.addEventListener("click", function(e) {
             const ingBtn = e.target.closest(".recipe__ingredient");
             if (!ingBtn) return;
-            handler();
+            const { id  } = ingBtn.dataset;
+            handler(id);
         });
     }
     addHandlerAddBookmark(handler) {
@@ -2742,7 +2752,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
     }
     _generateIngredient(ing) {
         return `
-        <li class="recipe__ingredient">
+        <li class="recipe__ingredient" data-id=${ing.id = Math.ceil(Math.random() * 4000)}>
             <svg class="recipe__icon">
             <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
             </svg>
@@ -3552,22 +3562,57 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _fractional = require("fractional");
 class CartView extends (0, _viewJsDefault.default) {
     _parentEl = document.querySelector(".cart__list");
-    _errorMessage = "No ingredient added yet. Find a nice recipe and add its ingredients :)";
+    _errorMessage = "No ingredient added to cart yet. Find a nice recipe and add its ingredients :)";
     _message = "";
     addHandlerRender(handler) {
         window.addEventListener("load", handler);
     }
     _generateMarkup() {
-        const id = window.location.hash.slice(1);
-        return this._data.map((ing, i)=>{
+        // const id = window.location.hash.slice(1);
+        return this._data.map((ing)=>{
             return `
-        <li class="recipe__ingredient">
-            <div class="recipe__quantity">${ing[i]?.quantity ? new (0, _fractional.Fraction)(ing[i].quantity).toString() : ""}</div>
-            <div class="recipe__description">
-            <span class="recipe__unit">${ing[i]?.unit}</span>
-            ${ing[i]?.description}
+        <li class="carted__ingredient">
+            <div class="CartIng__quantity">${ing?.quantity ? new (0, _fractional.Fraction)(ing.quantity).toString() : ""}</div>
+            <div class="CartIng__description">
+            <span class="CartIng__unit">${ing?.unit}</span>
+            ${ing?.description}
             </div>
+            <button class="btn--remove">Remove</button>
         </li>
+
+        <style>
+        .carted__ingredient{
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          padding: 1.5rem 3.25rem;
+          -webkit-transition: all 0.3s;
+          transition: all 0.3s;
+          border-right: 1px solid #fff;
+          text-decoration: none;
+          font-size: 16px;
+        }
+        .carted__ingredient:hover {
+          background-color: #f9f5f3;
+          -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+        }
+
+        .btn--remove{
+          padding: inherit !important;
+          color: #f48982;
+          top: 0.5rem;
+          right: 1.6rem;
+          font-size: 1.5rem;
+          cursor: pointer;
+          border: none;
+          background: none;
+        }
+        
+        </style>
     `;
         }).join("");
     }

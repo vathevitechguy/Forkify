@@ -126,12 +126,17 @@ const controlCart = function () {
   addToCartView.render(model.state.cart);
 };
 
-const controlAddToCart = async function () {
-  console.log('Working');
-  model.cartIngredient(model.state.recipe.ingredients);
-  console.log(model.state.cart);
-  controlCart();
-  // addToCartView.update(model.state.recipe);
+const controlAddToCart = async function (id) {
+  model.state.recipe.ingredients.filter((ing) => {
+    if (ing.id === +id) {
+      if (ing.cartedStatus) return;
+      model.cartIngredient(ing);
+      ing.cartedStatus = true;
+      controlCart();
+      console.log(model.state.cart);
+      return ing;
+    }
+  });
 };
 
 const init = function () {
@@ -140,7 +145,6 @@ const init = function () {
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   recipeView.addHandlerAddToCart(controlAddToCart);
-  // addToCartView.addHandlerRender(controlAddToCart);
   searchView.addHandlerSearch(controlSearchResults);
   sortResultView.addHandlerSort(controlSorting);
   paginationView.addHandlerClick(controlPagination);
