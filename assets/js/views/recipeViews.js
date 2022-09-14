@@ -30,7 +30,8 @@ class RecipeView extends View {
 
       if (!ingBtn) return;
 
-      handler();
+      const { id } = ingBtn.dataset;
+      handler(id);
     });
   }
 
@@ -139,7 +140,9 @@ class RecipeView extends View {
 
   _generateIngredient(ing) {
     return `
-        <li class="recipe__ingredient">
+        <li class="recipe__ingredient" data-id=${(ing.id = Math.ceil(
+          Math.random() * 4000
+        ))}>
             <svg class="recipe__icon">
             <use href="${icons}#icon-check"></use>
             </svg>

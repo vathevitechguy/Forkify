@@ -123,10 +123,17 @@ const saveCartLocally = function () {
   localStorage.setItem('Cart', JSON.stringify(state.cart));
 };
 
-export const cartIngredient = function (recipe) {
-  state.cart.push(recipe);
+export const cartIngredient = function (ingredient) {
+  state.cart.push(ingredient);
   saveCartLocally();
 };
+const getCartItems = (function () {
+  const cartData = JSON.parse(localStorage.getItem('Cart'));
+
+  if (!cartData) return;
+
+  state.cart = cartData;
+})();
 
 const saveBookmarksLocally = function () {
   localStorage.setItem('Bookmarks', JSON.stringify(state.bookmarks));

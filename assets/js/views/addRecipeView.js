@@ -1,5 +1,6 @@
 import { RENDER_FORM_TIME } from '../config.js';
 import View from './view.js';
+import icons from 'url:../../img/icons.svg';
 
 class AddRecipeView extends View {
   _parentEl = document.querySelector('.upload');
@@ -35,7 +36,7 @@ class AddRecipeView extends View {
   }
   _addHandlerHideWindow() {
     this._btnClose.addEventListener('click', this.execute.bind(this));
-    this._overlay.addEventListener('click', this._toggleWindow.bind(this));
+    this._overlay.addEventListener('click', this.execute.bind(this));
   }
 
   addHandlerUpload(handler) {
@@ -207,7 +208,7 @@ class AddRecipeView extends View {
 
         <button class="btn upload__btn">
           <svg>
-            <use href="assets/img/icons.svg#icon-upload-cloud"></use>
+            <use href="${icons}#icon-upload-cloud"></use>
           </svg>
           <span>Upload</span>
         </button>
