@@ -3503,7 +3503,7 @@ class AddRecipeView extends (0, _viewJsDefault.default) {
 }
 exports.default = new AddRecipeView();
 
-},{"./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../config.js":"c93Tb"}],"c1Psm":[function(require,module,exports) {
+},{"../config.js":"c93Tb","./view.js":"4RJvw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c1Psm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./view.js");
